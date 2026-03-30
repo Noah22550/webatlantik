@@ -9,7 +9,7 @@
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
   <div class="container-fluid">
-    <span class="navbar-brand mb-0 h1">Les plantes</span>
+    <span class="navbar-brand mb-0 h1">Bienvenue sur le site officiel d'Atlantik !!</span>
     <div class="d-flex align-items-center">
         <?php
         $session = session();
@@ -30,16 +30,16 @@
                 Se connecter
             </a>
         <?php endif; ?>
+        <a class="btn btn-outline-light btn-sm me-2" href="<?php echo site_url('listerplante') ?>">
+        Toutes les plantes
+        
+        </a>
+        <a class="btn btn-outline-light btn-sm me-2" href="<?php echo site_url('listerRegion') ?>">
+            Par région
+        </a>
     </div>
   </div>
 </nav>
-<div class="container mt-4 text-center">
-    <a class="btn btn-primary me-2" href="<?php echo site_url('listerplante') ?>">
-        Toutes les plantes
-    </a>
-    <a class="btn btn-success" href="<?php echo site_url('listerRegion') ?>">
-         Par région
-    </a>
 </div>
 </body>
 </html>
