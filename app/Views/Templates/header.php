@@ -30,9 +30,9 @@
                 Se connecter
             </a>
         <?php endif; ?>
-        <a class="btn btn-outline-light btn-sm me-2" href="<?php echo site_url('listerplante') ?>">
-        Toutes les plantes
-        
+        <a class="btn btn-outline-light btn-sm me-2" href="<?php echo site_url('inscription') ?>">
+        pas encore de compte ? inscrivez-vous !
+
         </a>
         <a class="btn btn-outline-light btn-sm me-2" href="<?php echo site_url('listerRegion') ?>">
             Par région

@@ -5,5 +5,8 @@ use CodeIgniter\Router\RouteCollection;
 /**
  * @var RouteCollection $routes
  */
-$routes->get('/', 'Home::index');
+//$routes->get('/', 'Home::acceuil');
 $routes->get('acceuil', 'visiteur::acceuil');
+$routes->match(['get', 'post'], 'inscription', 'visiteur::inscription');
+$routes->get('rapportajout', 'visiteur::rapportajout');
+

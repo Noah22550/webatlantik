@@ -1,0 +1,35 @@
+/* Taille du carrousel */
+#demo {
+    max-width: 1000px;
+    margin: auto;
+}
+
+/* Images */
+#demo img {
+    height: 450px;
+    object-fit: cover;
+    filter: brightness(60%); /* assombrit l'image */
+}
+
+/* Texte centré stylé */
+.custom-caption {
+    top: 50%;
+    transform: translateY(-50%);
+    bottom: auto;
+}
+
+/* Titre */
+.custom-caption h1 {
+    font-size: 3rem;
+    font-weight: bold;
+}
+
+/* Texte */
+.custom-caption p {
+    font-size: 1.2rem;
+}
+
+/* Bouton */
+.custom-caption .btn {
+    margin-top: 10px;
+}
