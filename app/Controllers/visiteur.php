@@ -1,6 +1,6 @@
 <?php
 namespace App\Controllers;
-helper(['url', 'assets', 'form']);
+helper(['assets', 'form']);
 use App\Models\ModeleClients;
 class visiteur extends BaseController
 {
@@ -57,7 +57,8 @@ class visiteur extends BaseController
         return view('Templates/Header')
             .view('utilisateur/vue_RapportAjout', $donnees);
     }
-    public function seconnecter()
+
+   public function seConnecter()
     {
         helper(['form']);
         $session = session();
@@ -71,7 +72,7 @@ class visiteur extends BaseController
         /* SI FORMULAIRE NON POSTE, LE CODE QUI SUIT N'EST PAS EXECUTE */
         /* VALIDATION DU FORMULAIRE */
         $reglesValidation = [ // Régles de validation
-            'txtIdentifiant' => 'required',
+            'txtmel' => 'required',
             'txtMotDePasse' => 'required',
         ];
         if (!$this->validate($reglesValidation)) {
@@ -83,32 +84,32 @@ class visiteur extends BaseController
         }
         /* SI FORMULAIRE NON VALIDE, LE CODE QUI SUIT N'EST PAS EXECUTE */
         /* RECHERCHE UTILISATEUR DANS BDD */
-        $Identifiant = $this->request->getPost('txtIdentifiant');
+        $mel = $this->request->getPost('txtmel');
         $MdP = $this->request->getPost('txtMotDePasse');
         /* on va chercher dans la BDD l'utilisateur correspondant aux id et mot de passe saisis */
         $modUtilisateur = new ModeleClients();
-        $condition = ['mel'=>$Identifiant,'motdepasse'=>$MdP];
+        $condition = ['mel'=>$mel,'motdepasse'=>$MdP];
         $utilisateurRetourne = $modUtilisateur->where($condition)->first();
+
         if ($utilisateurRetourne != null) {
-            /* identifiant et mot de passe OK : identifiant et profil sont stockés en session */
-            $session->set('mel', $utilisateurRetourne->mel);
-            $session->set('profil', $utilisateurRetourne->profil);
+            /* mel et mot de passe OK : mel et profil sont stockés en session */
+            $session->set('mel', $utilisateurRetourne->MEL);
+            //$session->set('profil', $utilisateurRetourne->profil);
             // profil = "SuperAdministrateur ou "Administrateur"
-            $data['mel'] = $Identifiant;
+            $data['mel'] = $mel;
             echo view('Templates/Header', $data);
             echo view('utilisateur/vue_ConnexionReussie');
         } else {
-            /* identifiant et/ou mot de passe OK : on renvoie le formulaire  */
-            $data['TitreDeLaPage'] = "Identifiant ou/et Mot de passe inconnu(s)";
+            /* mel et/ou mot de passe OK : on renvoie le formulaire  */
+            $data['TitreDeLaPage'] = "mel ou/et Mot de passe inconnu(s)";
             return view('Templates/Header', $data)
             . view('utilisateur/vue_SeConnecter')
             . view('Templates/Footer');
         }
-    }
-    public function sedeconnecter()
+    } // Fin seConnecter
+     public function seDeconnecter()
     {
-        $session = session();
-        $session->destroy(); // destruction de la session : plus d'identifiant ni de profil en session
-        return redirect()->to(site_url('acceuil')); // redirection vers la page d'accueil
-    }
+        session()->destroy();
+        return redirect()->to('seconnecter');
+    } // Fin seDeconnecte
 }
