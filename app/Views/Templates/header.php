@@ -9,7 +9,7 @@
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
   <div class="container-fluid">
-    <span class="navbar-brand mb-0 h1">Bienvenue sur le site officiel d'Atlantik !! </span> 
+    <span class="navbar-brand mb-0 h1"> Atlantik </span> 
     <div class="d-flex align-items-center">
         <?php
         $session = session();
@@ -20,9 +20,9 @@
             <a class="btn btn-outline-light btn-sm me-2" href="<?php echo site_url('sedeconnecter') ?>">
                 Se déconnecter
             </a>
-            <?php if ($session->get('profil') == 'Administrateur') : ?>
-                <a class="btn btn-warning btn-sm me-2" href="<?php echo site_url('ajouterplante') ?>">
-                    Ajouter
+            <?php if(!is_null($session->get('mel'))) : ?> 
+                <a class="btn btn-warning btn-sm me-2" href="<?php echo site_url('liaisonssecteur') ?>">
+                   Voir les liaisons
                 </a>
             <?php endif; ?>
         <?php else : ?>
@@ -30,10 +30,11 @@
                 Se connecter
             </a>
         <?php endif; ?>
-        <a class="btn btn-outline-light btn-sm me-2" href="<?php echo site_url('inscription') ?>">
-        pas encore de compte ? inscrivez-vous !
-
-        </a>
+        <?php if (is_null($session->get('mel'))) : ?>
+            <a class="btn btn-outline-light btn-sm me-2" href="<?php echo site_url('inscription') ?>">
+                S'inscrire
+            </a>
+        <?php endif; ?>
         <a class="btn btn-outline-light btn-sm me-2" href="<?php echo site_url('listerRegion') ?>">
             Par région
         </a>

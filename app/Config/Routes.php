@@ -12,3 +12,4 @@ $routes->get('rapportajout', 'visiteur::rapportajout');
 $routes->match(['get', 'post'], 'seconnecter', 'visiteur::seconnecter');
 $routes->get('sedeconnecter', 'visiteur::sedeconnecter');
 $routes->get('connexionreussie', 'visiteur::connexionreussie');
+$routes->get('liaisonssecteur', 'clients::liaisonssecteur');
