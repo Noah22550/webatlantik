@@ -9,13 +9,13 @@
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
   <div class="container-fluid">
-    <span class="navbar-brand mb-0 h1">Bienvenue sur le site officiel d'Atlantik !!</span>
+    <span class="navbar-brand mb-0 h1">Bienvenue sur le site officiel d'Atlantik !! </span> 
     <div class="d-flex align-items-center">
         <?php
         $session = session();
-        if(!is_null($session->get('identifiant'))) : ?>
+        if(!is_null($session->get('mel'))) : ?>
             <span class="text-white me-3">
-                Connecté : <strong><?php echo $session->get('identifiant'); ?></strong>
+                Connecté : <strong><?php echo $session->get('mel'); ?></strong>
             </span>
             <a class="btn btn-outline-light btn-sm me-2" href="<?php echo site_url('sedeconnecter') ?>">
                 Se déconnecter
