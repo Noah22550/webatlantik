@@ -17,7 +17,7 @@ foreach ($LesLiaisons as $uneLiaison) {
         $uneLiaison->nomsecteur,
         $uneLiaison->portdepart,
         $uneLiaison->portarrivee,
-        anchor('clients/vue_tarifliaison/' . $uneLiaison->NOLIAISON, $uneLiaison->NOLIAISON),
+        anchor('liaisontarif/' . $uneLiaison->NOLIAISON, $uneLiaison->NOLIAISON),
         $uneLiaison->DISTANCE
     ]);
 }

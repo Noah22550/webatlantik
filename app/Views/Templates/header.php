@@ -9,7 +9,7 @@
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
   <div class="container-fluid">
-    <span class="navbar-brand mb-0 h1"> Atlantik </span> 
+    <span class="navbar-brand mb-0 h1" href="<?= site_url('accueil') ?>"> Atlantik </span> 
     <div class="d-flex align-items-center">
         <?php
         $session = session();

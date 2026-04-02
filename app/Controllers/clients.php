@@ -2,6 +2,7 @@
     namespace App\Controllers;
     helper(['url', 'assets', 'form']);
     use App\Models\modeleLiaisons;
+    use App\Models\ModeleTarif;
     class clients extends BaseController
     {
         public function liaisonssecteur()
@@ -15,15 +16,15 @@
                 . view('clients/vue_liaisonssecteur', $data)
                 . view('Templates/Footer');
         }
-        public function liaisontarif()
+        public function liaisontarif($noliaison)
         {
-            $modLiaisons = new modeleLiaisons();
+            $modtarfis = new ModeleTarif();
 
-            $data['LesLiaisons'] = $modLiaisons->getliaisonsecteur();
-            $data['TitreDeLaPage'] = 'Toutes les liaisons avec tarifs';
+            $data['lesTarifs'] = $modtarfis->getTarif($noliaison);
+            $data['TitreDeLaPage'] = 'Tarifs de la liaison';
 
             return view('Templates/Header', $data)
-                . view('clients/vue_tarifliaison', $data)
+                . view('clients/vue_liaisontarif', $data)
                 . view('Templates/Footer');
         }
     }
