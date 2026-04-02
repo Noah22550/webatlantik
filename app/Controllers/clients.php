@@ -15,5 +15,16 @@
                 . view('clients/vue_liaisonssecteur', $data)
                 . view('Templates/Footer');
         }
-            }
+        public function liaisontarif()
+        {
+            $modLiaisons = new modeleLiaisons();
+
+            $data['LesLiaisons'] = $modLiaisons->getliaisonsecteur();
+            $data['TitreDeLaPage'] = 'Toutes les liaisons avec tarifs';
+
+            return view('Templates/Header', $data)
+                . view('clients/vue_tarifliaison', $data)
+                . view('Templates/Footer');
+        }
+    }
 ?>
