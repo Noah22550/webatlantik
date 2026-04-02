@@ -12,11 +12,10 @@
     
         public function getliaisonsecteur()
         {
-            return $this->select('secteur.nom, port_depart.nom, liaison.noliaison, liaison.distance')
+            return $this->select('secteur.nom AS nomsecteur , port_depart.NOM AS portdepart , port_arrivee.NOM AS portarrivee , liaison.NOLIAISON, liaison.DISTANCE')
                     ->join('port as port_depart', 'port_depart.noport = liaison.noport_depart')
                     ->join('port as port_arrivee', 'port_arrivee.noport = liaison.noport_arrivee')
                     ->join('secteur', 'secteur.nosecteur = liaison.nosecteur')
-                    ->get()
                     ->getresult();
         }
     }

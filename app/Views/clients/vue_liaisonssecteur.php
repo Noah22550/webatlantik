@@ -1,16 +1,31 @@
+<h2><?php echo $TitreDeLaPage ?></h2>
 <?php
-$attributsTableau = ["table_open" => "<table class='table table-striped'>"];
+$attributsTableau = ["table_open" => "<table class='table table-striped'>",]; // classe Bootstrap
 $table = new \CodeIgniter\View\Table($attributsTableau);
+$table->setHeading(['n° Commande', 'n° Client', 'Date', 'Réf. Produit',
+'Quantité commandée', 'Libellé', 'Prix HT']); // entête tableau
+echo $table->generate($lesliaisons);
+echo "<table class='table table-striped'>";
+echo "
+<tr>
+<th>n° Commande</th>
+<th>n° Client</th>
+<th>Date</th>
+<th>Réf. Produit</th>
+<th>Quantité commandée</th>
+<th>Libellé</th>
+<th>Prix HT</th>
+</tr>";
 
-$table->setHeading(['Secteur', 'Port de départ', 'N° liaison', 'Distance']);
-
-if (!empty($lesLiaisons)) {
-    foreach ($lesLiaisons as $uneLiaison) {
-        $table->addRow([$uneLiaison->nosecteur, $uneLiaison->nomport_depart, $uneLiaison->noliaison, $uneLiaison->distance]);
-    }
-} else {
-    $table->addRow("Aucune liaison trouvée");
+foreach ($lesliaisons as $uneLiaison)
+{
+    echo "<TR>";
+    echo "<TD>".$uneLiaison-> nomsecteur."</TD><TD>"
+    .$uneLiaison->portdepart."</TD><TD>"
+    .$uneLiaison->portarrivee."</TD><TD>"
+    .$uneLiaison->noliaison."</TD><TD>"
+    .$uneLiaison->distance."</TD><TD>";
+    echo "</TR>";
 }
-
-echo $table->generate();
+echo "</table>";
 ?>
