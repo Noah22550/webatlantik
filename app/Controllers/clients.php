@@ -4,14 +4,16 @@
     use App\Models\modeleLiaisons;
     class clients extends BaseController
     {
-        public function liaisonssecteur($referenceLiaisons = null)
+        public function liaisonssecteur()
         {
-            $modLiaisons = new modeleLiaisons(); 
-            $data['lesliaisons'] = $modLiaisons->find($referenceLiaisons);
+            $modLiaisons = new modeleLiaisons();
+
+            $data['LesLiaisons'] = $modLiaisons->getliaisonsecteur();
             $data['TitreDeLaPage'] = 'Toutes les liaisons';
-                return view('Templates/Header')
-                    . view('clients/vue_liaisonssecteur', $data)
-                    . view('Templates/Footer');
+
+            return view('Templates/Header', $data)
+                . view('clients/vue_liaisonssecteur', $data)
+                . view('Templates/Footer');
         }
-    }
+            }
 ?>
