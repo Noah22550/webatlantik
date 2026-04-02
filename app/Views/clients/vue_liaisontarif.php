@@ -1,9 +1,19 @@
 <h2><?= $TitreDeLaPage ?></h2>
-
 <?php
+
+?>
+<table> 
+    <?php foreach ($lesTarifs as $untarif) { ?>
+        <tr>
+            <?= "N° Liaison : " . $untarif->codeliaison . " Port départ et arrivé " . $untarif->portdépart . " - " . $untarif->portarrivé ?>
+        </tr>
+    <?php } ?>
+</table>
+<?php 
+
+/*
 $attributsTableau = ["table_open" => "<table class='table table-striped'>"];
 $table = new \CodeIgniter\View\Table($attributsTableau);
-
 $table->setHeading([
     'N° Liaison',
     'Port départ',
@@ -32,5 +42,5 @@ foreach ($lesTarifs as $untarif) {
     ]);
 }
 
-echo $table->generate();
+echo $table->generate();*/
 ?>
