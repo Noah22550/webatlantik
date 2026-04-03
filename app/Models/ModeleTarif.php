@@ -25,5 +25,20 @@
                     ->get()
                     ->getResult();
         } 
+        public function getcategorie()
+        {
+            return $this->select('c.LETTRECATEGORIE, c.libelle')
+                    ->from('categorie c')
+                    ->groupby('c.LETTRECATEGORIE, c.libelle')
+                    ->get()
+                    ->getResult();
+        }
+        public function getype(){
+            return $this->select('ty.NOTYPE, ty.libelle')
+                ->from('type ty')
+                    ->groupby('ty.NOTYPE, ty.libelle')
+                    ->get()
+                    ->getResult();
+        }
     }
 ?>
