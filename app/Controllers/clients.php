@@ -24,6 +24,7 @@
             $data['lesTarifs'] = $modtarfis->getTarif($noliaison);
             $data['categorie'] = $modtarfis->getcategorie();
             $data['type'] = $modtarfis->getype();
+            $data['periode'] = $modtarfis->getperiode();
             $data['TitreDeLaPage'] = 'Tarifs de la liaison ' . $noliaison;
             return view('Templates/Header', $data)
                 . view('clients/vue_liaisontarif', $data)

@@ -40,5 +40,13 @@
                     ->get()
                     ->getResult();
         }
+        public function getperiode(){
+            return $this->select('p.NOPERIODE, p.DATEDEBUT, p.DATEFIN')
+                ->from('periode p')
+                    ->groupby('p.NOPERIODE, p.DATEDEBUT, p.DATEFIN')
+                    //-> where('p.NOPERIODE', $noperiode)
+                    ->get()
+                    ->getResult();
+        }
     }
 ?>
