@@ -35,8 +35,10 @@
                 S'inscrire
             </a>
         <?php endif; ?>
-        <a class="btn btn-outline-light btn-sm me-2" href="<?php echo site_url('listerRegion') ?>">
-            Par région
+        <?php if(!is_null($session->get('mel'))) : ?>
+        <a class="btn btn-outline-light btn-sm me-2" href="<?php echo site_url('modifiercompte') ?>">
+            modifier mon compte
+        <?php endif; ?>
         </a>
     </div>
   </div>

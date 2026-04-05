@@ -15,3 +15,4 @@ $routes->get('connexionreussie', 'visiteur::connexionreussie');
 $routes->get('liaisonssecteur', 'clients::liaisonssecteur');
 $routes->get('liaisonssecteur', 'clients::liaisonssecteur');
 $routes->get('liaisontarif/(:num)', 'clients::liaisontarif/$1');
+$routes->get('modifiercompte', 'clients::modifcompte');
