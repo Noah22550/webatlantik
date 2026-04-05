@@ -1,27 +1,76 @@
-<h2><?php echo $TitreDeLaPage ?></h2>
-<?php
-if ($TitreDeLaPage == 'Saisie produit incorrecte')
- echo service('validation')->listErrors(); // affichage liste des erreurs, suite à erreur validation
-echo form_open('inscription'); 
-?>
-<?php echo csrf_field(); ?>
-<label for="txtnom">Nom</label>
-<input type="input" name="txtnom" value="<?php echo set_value('txtnom'); ?>" /><br />
-<label for="txtprenom">Prénom</label>
-<input type="input" name="txtprenom" value="<?php echo set_value('txtprenom'); ?>" /><br />
-<label for="txtadresse">Adresse</label>
-<input type="input" name="txtadresse" value="<?php echo set_value('txtadresse'); ?>" /><br />
-<label for="txtcode_postal">Code postal</label>
-<input type="input" name="txtcodepostal" value="<?php echo set_value('txtcodepostal'); ?>" /><br />
-<label for="txtville">Ville</label>
-<input type="input" name="txtville" value="<?php echo set_value('txtville'); ?>" /><br />
-<label for="txtemail">Email</label>
-<input type="input" name="txtmel" value="<?php echo set_value('txtmel'); ?>" /><br />
-<label for="txttelephonefixe">Numéro de téléphone fixe</label>
-<input type="input" name="txttelephonefixe" value="<?php echo set_value('txttelephonefixe'); ?>" /><br />
-<label for="txttelephoneportable">Numéro de téléphone portable</label>
-<input type="input" name="txttelephonemobile" value="<?php echo set_value('txttelephonemobile'); ?>" /><br />
-<label for="txtmot_de_passe">Mot de passe</label>
-<input type="password" name="txtmotdepasse" value="<?php echo set_value('txtmotdepasse'); ?>" /><br />
-<input type="submit" name="submit" value="s'inscrire !" />
-<?php echo form_close(); ?>
+<h2 class="text-center my-4"><?= $TitreDeLaPage ?></h2>
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+
+            <div class="card shadow p-4">
+                
+                <?php
+                if ($TitreDeLaPage == 'Saisie produit incorrecte') {
+                    echo '<div class="alert alert-danger">';
+                    echo service('validation')->listErrors();
+                    echo '</div>';
+                }
+
+                echo form_open('inscription');
+                echo csrf_field();
+                ?>
+
+                <div class="mb-3">
+                    <label class="form-label">Nom</label>
+                    <input type="text" name="txtnom" class="form-control" value="<?= set_value('txtnom'); ?>">
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Prénom</label>
+                    <input type="text" name="txtprenom" class="form-control" value="<?= set_value('txtprenom'); ?>">
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Adresse</label>
+                    <input type="text" name="txtadresse" class="form-control" value="<?= set_value('txtadresse'); ?>">
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Code postal</label>
+                    <input type="text" name="txtcodepostal" class="form-control" value="<?= set_value('txtcodepostal'); ?>">
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Ville</label>
+                    <input type="text" name="txtville" class="form-control" value="<?= set_value('txtville'); ?>">
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Email</label>
+                    <input type="email" name="txtmel" class="form-control" value="<?= set_value('txtmel'); ?>">
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Téléphone fixe</label>
+                    <input type="text" name="txttelephonefixe" class="form-control" value="<?= set_value('txttelephonefixe'); ?>">
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Téléphone mobile</label>
+                    <input type="text" name="txttelephonemobile" class="form-control" value="<?= set_value('txttelephonemobile'); ?>">
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Mot de passe</label>
+                    <input type="password" name="txtmotdepasse" class="form-control">
+                </div>
+
+                <div class="d-grid">
+                    <button type="submit" class="btn btn-primary">
+                        S'inscrire
+                    </button>
+                </div>
+
+                <?= form_close(); ?>
+
+            </div>
+        </div>
+    </div>
+</div>
