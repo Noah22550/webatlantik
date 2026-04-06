@@ -4,7 +4,7 @@
     use App\Models\ModeleLiaisons;
     use App\Models\ModeleTarif;
     use App\Models\ModeleClients;
-use PhpParser\Node\Expr\AssignOp\Mod;
+    use PhpParser\Node\Expr\AssignOp\Mod;
 
     class clients extends BaseController
     {
@@ -21,13 +21,13 @@ use PhpParser\Node\Expr\AssignOp\Mod;
         }
         public function liaisontarif($noliaison)
         {
-            $modliaison = new ModeleLiaisons();
-            //$data['entete'] = $modliaison->getentete($numliaison, $portarrive, $portdepart);
-            $modtarfis = new ModeleTarif();
-            $data['lesTarifs'] = $modtarfis->getAllTarifs($noliaison);
-            $data['categorie'] = $modtarfis->getcategorie();
-            $data['type'] = $modtarfis->getype();
-            $data['periode'] = $modtarfis->getperiode();
+        $modeletarif = new modeleTarif();
+
+            $data['noliaison']  = $noliaison;
+            $data['categories'] = $modeletarif->getcategorie();
+            $data['types']      = $modeletarif->getype();
+            $data['periodes']   = $modeletarif->getperiode();
+            $data['tarifs']     = $modeletarif->getAllTarifs($noliaison);
             $data['TitreDeLaPage'] = 'Tarifs de la liaison ' . $noliaison;
             return view('Templates/Header', $data)
                 . view('clients/vue_liaisontarif', $data)
