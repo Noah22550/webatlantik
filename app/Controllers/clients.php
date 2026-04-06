@@ -24,7 +24,7 @@ use PhpParser\Node\Expr\AssignOp\Mod;
             $modliaison = new ModeleLiaisons();
             //$data['entete'] = $modliaison->getentete($numliaison, $portarrive, $portdepart);
             $modtarfis = new ModeleTarif();
-            $data['lesTarifs'] = $modtarfis->getTarif($noliaison);
+            $data['lesTarifs'] = $modtarfis->getAllTarifs($noliaison);
             $data['categorie'] = $modtarfis->getcategorie();
             $data['type'] = $modtarfis->getype();
             $data['periode'] = $modtarfis->getperiode();
@@ -33,6 +33,12 @@ use PhpParser\Node\Expr\AssignOp\Mod;
                 . view('clients/vue_liaisontarif', $data)
                 . view('Templates/Footer');
         }
+
+
+
+
+
+        
         public function modifcompte()
         {
             $session = session();
@@ -40,7 +46,7 @@ use PhpParser\Node\Expr\AssignOp\Mod;
             $modelclient = new ModeleClients();
 
             if (!$this->request->is('post')) {
-                $data['client'] = $modelclient->getclient($this->session->get('noclient'));
+               // $data['client'] = $modelclient->getclient($this->session->get('noclient'));
 
                 return view('Templates/Header')
                     . view('clients/vue_modifiercompte', $data)
@@ -58,16 +64,13 @@ use PhpParser\Node\Expr\AssignOp\Mod;
                 'txtmel' => 'required|valid_email',
                 'txtmotdepasse' => 'required|string|min_length[5]',
             ];
-
             if (!$this->validate($reglesValidation)) {
                 $data['TitreDeLaPage'] = "Saisie client incorrecte";
-                $data['client'] = $modelclient->getclient($this->session->get('noclient'));
-
+                //$data['client'] = $modelclient->getclient($this->session->get('noclient'));
                 return view('Templates/Header')
                     . view('clients/vue_modifiercompte', $data)
                     . view('Templates/Footer');
             }
-
             $donneesAInserer = [
                 'nom' => $this->request->getPost('txtnom'),
                 'prenom' => $this->request->getPost('txtprenom'),
@@ -79,11 +82,8 @@ use PhpParser\Node\Expr\AssignOp\Mod;
                 'telephonemobile' => $this->request->getPost('txttelephonemobile'),
                 'motdepasse' => $this->request->getPost('txtmotdepasse'),
             ];
-
-            $modelclient->update($this->session->get('noclient'), $donneesAInserer);
-
+            //$modelclient->update($this->session->get('noclient'), $donneesAInserer);
             $donnees['clientAjoute'] = true;
-
             return view('Templates/Header')
                 . view('utilisateur/vue_RapportAjout', $donnees)
                 . view('Templates/Footer');

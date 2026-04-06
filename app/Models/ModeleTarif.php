@@ -9,6 +9,8 @@
         protected $useAutoIncrement = false;
         protected $returnType = 'object'; // résultats retournés sous forme d'objet(s)
         protected $allowedFields = ['NOPERIODE', 'LETTRECATEGORIE', 'NOTYPE','NOLIAISON','TARIF'];
+        
+        /*
         public function getTarif($noliaison)
         {
             return $this->select('l.NOLIAISON AS codeliaison, portd.NOM AS portdépart, porta.NOM AS portarrivé ,c.LETTRECATEGORIE AS lettretype,  
@@ -25,6 +27,7 @@
                     ->get()
                     ->getResult();
         } 
+        */
         public function getcategorie()
         {
             return $this->select('c.LETTRECATEGORIE, c.libelle')
@@ -35,7 +38,7 @@
         }
         public function getype(){
             return $this->select('ty.NOTYPE, ty.libelle')
-                ->from('type ty')
+                    ->from('type ty')
                     ->groupby('ty.NOTYPE, ty.libelle')
                     ->get()
                     ->getResult();
@@ -45,6 +48,18 @@
                 ->from('periode p')
                     ->groupby('p.NOPERIODE, p.DATEDEBUT, p.DATEFIN')
                     //-> where('p.NOPERIODE', $noperiode)
+                    ->get()
+                    ->getResult();
+        }
+        public function getAllTarifs($noliaison)
+        {
+            return $this->select('tar.TARIF, ty.LETTRECATEGORIE')
+                    ->from('tarifer tar')
+                    ->join('liaison l', 'l.NOLIAISON = tar.NOLIAISON')
+                    ->join('type ty ', 'ty.NOTYPE = tar.NOTYPE')
+                    ->join('categorie c', 'c.LETTRECATEGORIE = ty.LETTRECATEGORIE')
+                    ->join('periode p', 'p.NOPERIODE = tar.NOPERIODE')
+                    ->where('l.NOLIAISON', $noliaison)
                     ->get()
                     ->getResult();
         }
