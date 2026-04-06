@@ -4,7 +4,11 @@
             <tr>
                 <th>Catégorie</th>
                 <th>Type</th>
-                <?php 
+                <th colspan="<?= count($periodes) ?>">Périodes</th>
+            </tr>
+            <tr>
+                 <th colspan="2"></th>
+                 <?php
                     foreach ($periodes as $unePeriode) : ?>
                         <th><?= $unePeriode->DATEDEBUT. '</br>' . $unePeriode->DATEFIN ?></th>
                     <?php endforeach; ?>
