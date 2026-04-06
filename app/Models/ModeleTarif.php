@@ -9,7 +9,6 @@
         protected $useAutoIncrement = false;
         protected $returnType = 'object'; // résultats retournés sous forme d'objet(s)
         protected $allowedFields = ['NOPERIODE', 'LETTRECATEGORIE', 'NOTYPE','NOLIAISON','TARIF'];
-        
         public function getcategorie()
         {
             return $this->select('c.LETTRECATEGORIE, c.libelle')
@@ -35,9 +34,8 @@
         }
         public function getAllTarifs($noliaison)
         {
-            return $this->from('tarifer t')
-                ->select('t.TARIF, t.NOPERIODE, t.NOTYPE, t.LETTRECATEGORIE')
-                ->where('t.NOLIAISON', $noliaison)
+            return $this->select('TARIF, NOPERIODE, NOTYPE, LETTRECATEGORIE')
+                ->where('NOLIAISON', $noliaison)
                 ->get()
                 ->getResult();
         }
