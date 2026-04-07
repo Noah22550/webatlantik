@@ -39,6 +39,11 @@
         <a class="btn btn-outline-light btn-sm me-2" href="<?php echo site_url('modifiercompte') ?>">
             modifier mon compte
         <?php endif; ?>
+        <?php if(!is_null($session->get('mel'))) : ?>
+            <a class="btn btn-outline-light btn-sm me-2" href="<?php echo site_url('affichertraverse') ?>">
+                Voir les horaires des traversées
+            </a>
+        <?php endif; ?>
         </a>
     </div>
   </div>

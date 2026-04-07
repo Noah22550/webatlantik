@@ -89,5 +89,12 @@
                 . view('utilisateur/vue_RapportAjout', $donnees)
                 . view('Templates/Footer');
         }
+        public function affichertraverse()
+        {
+            $data['TitreDeLaPage'] = 'Horaires des traversées';
+            return view('Templates/Header')
+                . view('clients/vue_traverse', $data)
+                . view('Templates/Footer');
+        }
     }
 ?>
