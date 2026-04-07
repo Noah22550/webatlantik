@@ -28,6 +28,7 @@
             $data['types']      = $modeletarif->getype();
             $data['periodes']   = $modeletarif->getperiode();
             $data['tarifs']     = $modeletarif->getAllTarifs($noliaison);
+            $data['nomsports']  = $modeletarif->getnomport($noliaison);
             $data['TitreDeLaPage'] = 'Tarifs de la liaison ' . $noliaison;
             return view('Templates/Header', $data)
                 . view('clients/vue_liaisontarif', $data)

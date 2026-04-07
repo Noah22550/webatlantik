@@ -39,5 +39,15 @@
                 ->get()
                 ->getResult();
         }
+        public function getnomport($noliaison)
+        {
+            return $this->select('p.NOM as depart, po.NOM as arrivee')
+                ->from('liaison l')
+                ->join('port p', 'p.NOPORT = l.NOPORT_DEPART')
+                ->join('port po', 'po.NOPORT = l.NOPORT_ARRIVEE')
+                ->where('l.NOLIAISON', $noliaison)
+                ->get()
+                ->getResult();
+        }
     }
 ?>

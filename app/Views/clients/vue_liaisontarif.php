@@ -1,3 +1,6 @@
+<center>
+<h4><?=  $TitreDeLaPage. ' - ' . $nomsports[0]->depart . ' -> ' . $nomsports[0]->arrivee ?> </h4>
+</center>
 <div class="mt-4">
     <table class="table table-bordered text-center align-middle">
         <thead class="table-secondary">
@@ -15,28 +18,27 @@
             </tr>
         </thead>
         <tbody>
-            <?php foreach ($categories as $cat) : ?>
-                <?php foreach ($types as $type) : ?>
-                    <?php if ($type->LETTRECATEGORIE !== $cat->LETTRECATEGORIE) continue; ?>
-                    <tr>
-                        <td><?= $cat->LETTRECATEGORIE ?> - <?= $cat->libelle ?></td>
-                        <td><?= $cat->LETTRECATEGORIE . $type->NOTYPE ?> - <?= $type->libelle ?></td>
-                        <?php 
-                        foreach($tarifs as $unTarif)
+            <?php foreach ($categories as $cat) {
+                foreach ($types as $type) {
+                          if ($type->LETTRECATEGORIE !== $cat->LETTRECATEGORIE) continue; 
+                                echo '<tr>';
+                                echo' <td>' . $cat->LETTRECATEGORIE . ' - ' . $cat->libelle. '</td>';
+                                echo '<td>' . $cat->LETTRECATEGORIE . $type->NOTYPE . ' - ' . $type->libelle . '</td>';
+                                foreach($tarifs as $unTarif)
                                 {
-                                    if ($unTarif->LETTRECATEGORIE === $cat->LETTRECATEGORIE && $unTarif->NOTYPE === $type->NOTYPE) {
-                                        foreach ($periodes as $unePeriode) {
+                                    if ($unTarif->LETTRECATEGORIE === $cat->LETTRECATEGORIE && $unTarif->NOTYPE === $type->NOTYPE) 
+                                        {
+                                            foreach ($periodes as $unePeriode) {
                                             if ($unePeriode->NOPERIODE == $unTarif->NOPERIODE) {
                                                 echo '<td>' . $unTarif->TARIF . ' €</td>';
-                                                break;
                                             }
                                         }
                                     }
-                                } 
-                        ?>     
-                    </tr>
-                <?php endforeach; ?>
-            <?php endforeach; ?>
+                                }                            
+                    echo '</tr>';
+                }
+            } 
+            ?>
         </tbody>
     </table>
 </div>
