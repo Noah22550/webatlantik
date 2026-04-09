@@ -1,5 +1,5 @@
 <center>
-<h4><?=  $TitreDeLaPage. ' - ' . $nomsports[0]->depart . ' -> ' . $nomsports[0]->arrivee ?> </h4>
+    <h4><?=  $TitreDeLaPage. ' - ' . $nomsports[0]->depart . ' -> ' . $nomsports[0]->arrivee ?> </h4>
 </center>
 <div class="mt-4">
     <table class="table table-bordered text-center align-middle">

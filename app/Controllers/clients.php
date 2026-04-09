@@ -33,22 +33,15 @@
             return view('Templates/Header', $data)
                 . view('clients/vue_liaisontarif', $data)
                 . view('Templates/Footer');
-        }
-
-
-
-
-
-        
+        } 
         public function modifcompte()
         {
             $session = session();
             $data['TitreDeLaPage'] = 'Modifier mon compte';
             $modelclient = new ModeleClients();
-
             if (!$this->request->is('post')) {
-               // $data['client'] = $modelclient->getclient($this->session->get('noclient'));
-
+               $data['client'] = $modelclient->getclient($this->session->get('noclient'));
+                
                 return view('Templates/Header')
                     . view('clients/vue_modifiercompte', $data)
                     . view('Templates/Footer');
@@ -72,6 +65,7 @@
                     . view('clients/vue_modifiercompte', $data)
                     . view('Templates/Footer');
             }
+
             $donneesAInserer = [
                 'nom' => $this->request->getPost('txtnom'),
                 'prenom' => $this->request->getPost('txtprenom'),
@@ -83,7 +77,7 @@
                 'telephonemobile' => $this->request->getPost('txttelephonemobile'),
                 'motdepasse' => $this->request->getPost('txtmotdepasse'),
             ];
-            //$modelclient->update($this->session->get('noclient'), $donneesAInserer);
+            $modelclient->update($modelclient->update ($donneesAInserer, false)); 
             $donnees['clientAjoute'] = true;
             return view('Templates/Header')
                 . view('utilisateur/vue_RapportAjout', $donnees)
