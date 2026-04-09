@@ -4,6 +4,7 @@
     use App\Models\ModeleLiaisons;
     use App\Models\ModeleTarif;
     use App\Models\ModeleClients;
+    use App\Models\ModeleHoraire;
     use PhpParser\Node\Expr\AssignOp\Mod;
 
     class clients extends BaseController
@@ -34,13 +35,21 @@
                 . view('clients/vue_liaisontarif', $data)
                 . view('Templates/Footer');
         } 
-        public function modifcompte()
+
+
+
+        public function modifcompte($noclient)
         {
-            $session = session();
+            //$session = session();
             $data['TitreDeLaPage'] = 'Modifier mon compte';
             $modelclient = new ModeleClients();
+            $mel = $modelclient->find($noclient);
+            //$session->set('mel', $utilisateurRetourne->MEL);
+
+            if(!$mel) {
+                throw new \CodeIgniter\Exceptions\PageNotFoundException('Client non trouvé');
+            }
             if (!$this->request->is('post')) {
-               $data['client'] = $modelclient->getclient($this->session->get('noclient'));
                 
                 return view('Templates/Header')
                     . view('clients/vue_modifiercompte', $data)
@@ -48,7 +57,7 @@
             }
 
             $reglesValidation = [
-                'txtnom' => 'string|max_length[30]',
+                'txtnom' => 'required|string|max_length[30]',
                 'txtprenom' => 'required|string|max_length[30]',
                 'txtadresse' => 'required|string|max_length[100]',
                 'txtcodepostal' => 'required|numeric',
@@ -77,15 +86,18 @@
                 'telephonemobile' => $this->request->getPost('txttelephonemobile'),
                 'motdepasse' => $this->request->getPost('txtmotdepasse'),
             ];
-            $modelclient->update($modelclient->update ($donneesAInserer, false)); 
+            $noclient = $donneesAInserer['noclient'] ;
+            $modelclient->update($noclient, $donneesAInserer); 
             $donnees['clientAjoute'] = true;
             return view('Templates/Header')
-                . view('utilisateur/vue_RapportAjout', $donnees)
+                . view('utilisateur/vue_RapportModif', $donnees)
                 . view('Templates/Footer');
         }
         public function affichertraverse()
         {
             $data['TitreDeLaPage'] = 'Horaires des traversées';
+            $modSec = new ModeleHoraire();
+            $data['nomsecteur'] = $modSec->findall();
             return view('Templates/Header')
                 . view('clients/vue_traverse', $data)
                 . view('Templates/Footer');
