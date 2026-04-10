@@ -28,8 +28,8 @@
                     <select name="partie_de_la_journee" class="form-select mb-1">
                         <option value="periode">
                             <?php 
-                                foreach ($periodes as $uneperiode) {
-                                echo $uneperiode->NOPERIODE;
+                                foreach ($lesperiodes as $uneperiode) {
+                                echo $uneperiode->DATEDEBUT.' - '.$uneperiode->DATEFIN;
                                 }
                             ?>
                         </option>

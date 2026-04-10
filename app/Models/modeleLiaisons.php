@@ -39,10 +39,10 @@
                 ->getResult();
         }
         public function getperiode($noliaison){
-            return $this->select('p.NOPERIODE')
-                ->join('periode p', 'p.NOPERIODE = t.NOPERIODE')
-                ->where('t.NOLIAISON', $noliaison)
-                ->groupby('p.NOPERIODE')
+            return $this->select('p.DATEDEBUT, p.DATEFIN')
+                ->join('periode p', 'p.NOPERIODE = liaison.NOPERIODE')
+                ->where('liaison.NOLIAISON', $noliaison)
+                ->groupby('p.DATEDEBUT, p.DATEFIN')
                 ->get()
                 ->getResult();
         }
