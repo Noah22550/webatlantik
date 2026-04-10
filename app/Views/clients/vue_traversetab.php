@@ -1,4 +1,4 @@
- <div class="row justify-content">
+<div class="row justify-content">
         <div class="col-md-3">
             <div class="card shadow p-3 mb-5 bg-body rounded">
                 <div class="card-body">
@@ -19,16 +19,20 @@
                 Choisissez votre créneau :
                 <br>
                     <select name="jour" class="form-select mb-2">
-                        <option value="monday">Lundi</option>
-                        <option value="tuesday">Mardi</option>
-                        <option value="wednesday">Mercredi</option>
-                        <option value="thursday">Jeudi</option>
-                        <option value="friday">Vendredi</option>
+                        <option value="laison"><?php 
+                        foreach ($uneliaison as $uneLiaison) {
+                            echo $uneLiaison->portdepart.' - '.$uneLiaison->portarrivee;
+                        }
+                        ?></option>
                     </select>
                     <select name="partie_de_la_journee" class="form-select mb-1">
-                        <option value="morning">Matin</option>
-                        <option value="afternoon">Après-midi</option>
-                        <option value="night">Soir</option>
+                        <option value="periode">
+                            <?php 
+                                foreach ($periodes as $uneperiode) {
+                                echo $uneperiode->NOPERIODE;
+                                }
+                            ?>
+                        </option>
                     </select>
                     <input type="submit" value="Valider" class="btn btn-danger mt-2">
             </div>

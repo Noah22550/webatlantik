@@ -95,12 +95,23 @@
         }
         public function affichertraverse()
         {
-            $data['TitreDeLaPage'] = 'Horaires des traversées';
             $modSec = new ModeleHoraire();
             $data['nomsecteur'] = $modSec->findall();
             return view('Templates/Header')
-                . view('clients/vue_traverse', $data)
+                . view('clients/vue_affichertraverse', $data)
                 . view('Templates/Footer');
+        }
+        public function traversetab($noliaison)
+        {
+            $data['TitreDeLaPage'] = 'Horaires des traversées';
+            $modSec = new ModeleHoraire();
+            $data['nomsecteur'] = $modSec->findall();
+                $modLiaisons = new ModeleLiaisons();
+                $modperiode = new ModeleLiaisons();
+                $data['uneliaison'] = $modLiaisons->getport($noliaison);
+                return view('Templates/Header')
+                    . view('clients/vue_traversetab', $data)
+                    . view('Templates/Footer');
         }
     }
 ?>

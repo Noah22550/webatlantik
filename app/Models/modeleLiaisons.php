@@ -28,6 +28,24 @@
                     ->get()
                     ->getResult();
         }
+        public function getport($noliaison){
+            return $this->select('p.NOM as portdepart, po.NOM as portarrivee')
+                ->from('liaison l')
+                ->join('port p', 'p.NOPORT = l.NOPORT_DEPART')
+                ->join('port po', 'po.NOPORT = l.NOPORT_ARRIVEE')
+                ->groupby('p.NOM, po.NOM')
+                ->where('l.NOLIAISON', $noliaison)
+                ->get()
+                ->getResult();
+        }
+        public function getperiode($noliaison){
+            return $this->select('p.NOPERIODE')
+                ->join('periode p', 'p.NOPERIODE = t.NOPERIODE')
+                ->where('t.NOLIAISON', $noliaison)
+                ->groupby('p.NOPERIODE')
+                ->get()
+                ->getResult();
+        }
 
 
     }

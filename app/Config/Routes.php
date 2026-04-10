@@ -17,3 +17,4 @@ $routes->get('liaisonssecteur', 'clients::liaisonssecteur');
 $routes->get('liaisontarif/(:num)', 'clients::liaisontarif/$1');
 $routes->match(['get', 'post'], 'modifiercompte', 'clients::modifcompte');
 $routes->get('affichertraverse', 'clients::affichertraverse');
+$routes->get('traversetab/(:num)', 'clients::traversetab/$1');
