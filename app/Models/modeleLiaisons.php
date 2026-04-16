@@ -40,7 +40,7 @@
         }
         public function getperiode($noliaison){
             return $this->select('p.DATEDEBUT, p.DATEFIN')
-                ->join('periode p', 'p.NOPERIODE = liaison.NOPERIODE')
+                ->join('periode p', 'p.NOPERIODE = liaison.NOLIAISON')
                 ->where('liaison.NOLIAISON', $noliaison)
                 ->groupby('p.DATEDEBUT, p.DATEFIN')
                 ->get()
