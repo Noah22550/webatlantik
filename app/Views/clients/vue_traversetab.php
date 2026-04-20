@@ -4,8 +4,7 @@
                 <div class="card-body">
                     <h3 class="card-title">Horaires des traversées</h3>
                 <?php foreach ($nomsecteur as $unSecteur) {
-                    echo '<h3 class="link-danger link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">'.anchor('clients/affichertraverse/'.$unSecteur->NOM, $unSecteur->NOM).'</h3>';
-                    echo '</h3>';
+                    echo '<h3 class="link-danger link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">'.anchor('traversetab/'.$unSecteur->NOSECTEUR, $unSecteur->NOM).'</h3>';
                 }
                 ?>
             </div>
@@ -29,7 +28,7 @@
                         <option value="periode">
                             <?php 
                                 foreach ($lesperiodes as $uneperiode) {
-                                echo $uneperiode->DATEDEBUT.' - '.$uneperiode->DATEFIN;
+                                echo $uneperiode->DATEDEBUT.' -> '.$uneperiode->DATEFIN;
                                 }
                             ?>
                         </option>
