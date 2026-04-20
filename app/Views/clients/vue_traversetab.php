@@ -20,7 +20,7 @@
                     <select name="jour" class="form-select mb-2">
                         <option value="laison"><?php 
                         foreach ($uneliaison as $uneLiaison) {
-                            echo $uneLiaison->portdepart.' - '.$uneLiaison->portarrivee;
+                            echo $uneLiaison->portdepart.' -> '.$uneLiaison->portarrivee;
                         }
                         ?></option>
                     </select>
@@ -36,6 +36,31 @@
                     <input type="submit" value="Valider" class="btn btn-danger mt-2">
             </div>
         </div>
+            <div class="container">
+      <h2>Traversée</h2>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>N°</th>
+            <th>Heure</th>
+            <th>Bateau</th>
+            <th>A passager</th>
+            <th>B véh.inf.2m</th>
+            <th>C véh.sup.2m</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td>09:00</td>
+            <td>Le Bateau</td>
+            <td>10</td>
+            <td>5</td>
+            <td>2</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
     </div>
 
 </div>
