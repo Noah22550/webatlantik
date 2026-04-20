@@ -9,5 +9,17 @@
         protected $useAutoIncrement = true;
         protected $returnType = 'object'; // résultats retournés sous forme d'objet(s)
         protected $allowedFields = ['NOM']; 
+
+         public function getQuantiteEnregistree($noTraversee, $lettreCategorie)
+    {
+        return $this->select('SUM(e.QUANTITERESERVEE) as quantite')
+            ->from('reservation r')
+            ->join('enregistrer e', 'r.NORESERVATION = e.NORESERVATION')
+            ->where('r.NOTRAVERSEE', $noTraversee)
+            ->where(' e.LETTRECATEGORIE', $lettreCategorie)
+            ->get()
+            ->getResult();
     }
+    }
+   
 ?>
