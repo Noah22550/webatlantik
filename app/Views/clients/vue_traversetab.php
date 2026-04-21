@@ -37,6 +37,7 @@
                     <input type="submit" value="Valider" class="btn btn-danger mt-2">
             </div>
         </div>
+        <!-- tableau : Affichage des résulstats -->
             <div class="container">
       <h2>Traversée</h2>
       <table class="table">
@@ -63,5 +64,4 @@
       </table>
     </div>
     </div>
-
 </div>
