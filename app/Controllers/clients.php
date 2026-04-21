@@ -5,7 +5,7 @@
     use App\Models\ModeleTarif;
     use App\Models\ModeleClients;
     use App\Models\ModeleHoraire;
-    use PhpParser\Node\Expr\AssignOp\Mod;
+    use App\Models\modelecategorie;
 
     class clients extends BaseController
     {
@@ -105,7 +105,9 @@
         {
             $data['TitreDeLaPage'] = 'Horaires des traversées';
             $modSec = new ModeleHoraire();
+            $modcate = new modelecategorie();
             $data['nomsecteur'] = $modSec->findall();
+            $data['lescatégories'] = $modcate->findall();
                 $modLiaisons = new ModeleLiaisons();
                 $modperiode = new ModeleLiaisons();
                 $data['uneliaison'] = $modLiaisons->getport($noliaison);

@@ -38,6 +38,7 @@
         </div>
         <!-- tableau : Affichage des résulstats -->
             <div class="container">
+               <!--  if !isset submit -->
       <h2>Traversée</h2>
       <table class="table">
         <thead>
@@ -45,9 +46,10 @@
             <th>N°</th>
             <th>Heure</th>
             <th>Bateau</th>
-            <th>A passager</th>
-            <th>B véh.inf.2m</th>
-            <th>C véh.sup.2m</th>
+            <th><?php foreach ($lescatégories as $categorie)
+            {
+                echo "<th>". $categorie->LETTRECATEGORIE.' '.$categorie->LIBELLE. "</th>";
+            }?>
           </tr>
         </thead>
         <tbody>
