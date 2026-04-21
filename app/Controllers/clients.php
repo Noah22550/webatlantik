@@ -110,7 +110,6 @@
                 $modperiode = new ModeleLiaisons();
                 $data['uneliaison'] = $modLiaisons->getport($noliaison);
                 $data['lesperiodes'] = $modperiode->getperiode($noliaison);
-
                 return view('Templates/Header')
                     . view('clients/vue_traversetab', $data)
                     . view('Templates/Footer');
