@@ -33,7 +33,7 @@
                             ?>
                         </option>
                     </select>
-                    <input type="submit" value="Valider" class="btn btn-danger mt-2">
+                    <input type="submit" value="Valider" class="btn btn-danger mt-2" name="bouton">
             </div>
         </div>
         <!-- tableau : Affichage des résulstats -->
@@ -46,21 +46,27 @@
             <th>N°</th>
             <th>Heure</th>
             <th>Bateau</th>
-            <th><?php foreach ($lescatégories as $categorie)
+            <?php foreach ($lescatégories as $categorie)
             {
                 echo "<th>". $categorie->LETTRECATEGORIE.' '.$categorie->LIBELLE. "</th>";
             }?>
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>1</td>
-            <td>09:00</td>
-            <td>Le Bateau</td>
-            <td>10</td>
-            <td>5</td>
-            <td>2</td>
-          </tr>
+          
+        <?php if (empty($traversees)) : ?>
+        <tr>
+            <td colspan="5">Aucune traversée disponible pour cette date.</td>
+        </tr>
+        <?php else : ?>
+        <?php foreach ($traversees as $uneTraversee) : ?>
+            <tr>
+                <td><?= $uneTraversee->NOTRAVERSEE ?></td>
+                <td><?= $uneTraversee->HEURE ?></td>
+                <td><?= $uneTraversee->NOM ?></td>
+            </tr>
+        <?php endforeach; ?>
+        <?php endif; ?>
         </tbody>
       </table>
     </div>
