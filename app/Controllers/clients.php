@@ -101,7 +101,7 @@
                 . view('clients/vue_affichertraverse', $data)
                 . view('Templates/Footer');
         }
-       public function traversetab($noliaison, $nosecteur = null)
+       public function traversetab($noliaison, $nosecteur = null, $dateTraversee = null)
         {
             $data['TitreDeLaPage'] = 'Horaires des traversées';
             $modSec = new ModeleHoraire();
@@ -112,8 +112,9 @@
             $modLiaisons = new ModeleLiaisons();
             $modperiode = new ModeleLiaisons();
             $data['uneliaison'] = $modLiaisons->getport($noliaison);
-            $data['lesperiodes'] = $modperiode->getperiode($noliaison);
-            $data['traversees'] = $modSec->getLesTraverseesBateaux($noliaison);
+
+            $data['lesperiodes'] = $modperiode->getperiode($nosecteur);
+            $data['traversees'] = $modSec->getLesTraverseesBateaux($noliaison, $dateTraversee);
 
             return view('Templates/Header')
                 . view('clients/vue_traversetab', $data)

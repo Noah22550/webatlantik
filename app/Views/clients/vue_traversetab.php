@@ -62,6 +62,11 @@
             </tr>';
             }
             else {
+                if (empty($lesperiodes)){
+                    echo '<tr>
+                        <td colspan="5">Choisissez une date.</td>
+                    </tr>';
+                }
                 foreach ($traversees as $uneTraversee) {
                 echo "<tr>";
                     echo "<td>" .$uneTraversee->NOTRAVERSEE ."</td>";

@@ -20,15 +20,15 @@
                 ->get()
                 ->getResult();
             }
-        public function getLesTraverseesBateaux($noLiaison)
+        public function getLesTraverseesBateaux($noLiaison, $dateTraversee)
         {
             return $this->select('t.NOTRAVERSEE,TIME(t.DATEHEUREDEPART) AS HEURE, b.NOM')
                 ->from('liaison l')
                 ->join('traversee t', 'l.NOLIAISON = t.NOLIAISON')
                 ->join('bateau b', 't.NOBATEAU = b.NOBATEAU')
                 ->where('t.NOLIAISON', $noLiaison)
+                ->where('DATE(t.DATEHEUREDEPART)', $dateTraversee)
                 ->groupby('t.NOTRAVERSEE')
-                //->where('DATE(t.DATEHEUREDEPART)', $dateTraversee)
                 ->get()
                 ->getResult();
         }
