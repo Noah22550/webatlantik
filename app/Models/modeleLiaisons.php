@@ -10,7 +10,7 @@
         protected $returnType = 'object'; // résultats retournés sous forme d'objet(s)
         protected $allowedFields = ['noport_depart', 'nosecteur','noport_arrivee', 'distance'];
     
-       public function getentete($numliaison, $portarrive, $portdepart){
+       public function getentete($numliaison){
             return $this->select("l.NOLIAISON AS codeliaison, portd.NOM AS portdépart, porta.NOM AS portarrivé")
                     ->from('liaison l')
                     ->join('port porta', 'porta.NOPORT = l.NOPORT_ARRIVEE')

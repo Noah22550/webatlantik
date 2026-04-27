@@ -101,7 +101,7 @@
                 . view('clients/vue_affichertraverse', $data)
                 . view('Templates/Footer');
         }
-       public function traversetab($noliaison, $nosecteur = null, $dateTraversee = null)
+       public function traversetab($noliaison, $nosecteur , $dateTraversee)
         {
             $data['TitreDeLaPage'] = 'Horaires des traversées';
             $modSec = new ModeleHoraire();
