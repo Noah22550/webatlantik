@@ -112,9 +112,7 @@
             $modLiaisons = new ModeleLiaisons();
             $modperiode = new ModeleLiaisons();
             $data['uneliaison'] = $modLiaisons->getport($noliaison);
-
-            // Seulement si $nosecteur est fourni
-            $data['lesperiodes'] = $modperiode->getperiode($nosecteur);
+            $data['lesperiodes'] = $modperiode->getperiode($noliaison);
             $data['traversees'] = $modSec->getLesTraverseesBateaux($noliaison);
 
             return view('Templates/Header')
