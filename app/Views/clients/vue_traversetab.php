@@ -56,19 +56,22 @@
         </thead>
         <tbody>
           
-        <?php if (!isset($_POST['bouton'])) : ?>
-        <tr>
-            <td colspan="5">Aucune traversée disponible pour cette date.</td>
-        </tr>
-        <?php else : ?>
-        <?php foreach ($traversees as $uneTraversee) : ?>
-            <tr>
-                <td><?= $uneTraversee->NOTRAVERSEE ?></td>
-                <td><?= $uneTraversee->HEURE ?></td>
-                <td><?= $uneTraversee->NOM ?></td>
-            </tr>
-        <?php endforeach; ?>
-        <?php endif; ?>
+        <?php if (!isset($_POST['bouton'])) {
+            echo '<tr>
+                <td colspan="5">Aucune traversée disponible pour cette date.</td>
+            </tr>';
+            }
+            else {
+                foreach ($traversees as $uneTraversee) {
+                echo "<tr>";
+                    echo "<td>" .$uneTraversee->NOTRAVERSEE ."</td>";
+                    echo "<td>" . $uneTraversee->HEURE ." </td>" ;
+                    echo "<td> " .$uneTraversee->NOM ." </td>";
+                echo "</tr>";
+                }
+                
+            }
+        ?>
         </tbody>
       </table>
     </div>

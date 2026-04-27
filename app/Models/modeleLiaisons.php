@@ -33,9 +33,8 @@
                 ->from('liaison l')
                 ->join('port p', 'p.NOPORT = l.NOPORT_DEPART')
                 ->join('port po', 'po.NOPORT = l.NOPORT_ARRIVEE')
-                ->join('secteur s', 's.NOSECTEUR = l.NOSECTEUR')
                 ->groupby('p.NOM, po.NOM')
-                ->where('l.NOLIAISON', $noliaison)
+                ->where('l.NOSECTEUR', $noliaison)
                 ->get()
                 ->getResult();
         }
