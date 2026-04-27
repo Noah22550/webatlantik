@@ -33,16 +33,17 @@
                 ->from('liaison l')
                 ->join('port p', 'p.NOPORT = l.NOPORT_DEPART')
                 ->join('port po', 'po.NOPORT = l.NOPORT_ARRIVEE')
+                ->join('secteur s', 's.NOSECTEUR = l.NOSECTEUR')
                 ->groupby('p.NOM, po.NOM')
                 ->where('l.NOLIAISON', $noliaison)
                 ->get()
                 ->getResult();
         }
         public function getperiode($noliaison){
-            return $this->select('p.DATEDEBUT, p.DATEFIN')
-                ->join('periode p', 'p.NOPERIODE = liaison.NOLIAISON')
-                ->where('liaison.NOLIAISON', $noliaison)
-                ->groupby('p.DATEDEBUT, p.DATEFIN')
+            return $this->select('date(DATEHEUREDEPART) as dates')
+                ->from('traversee t')
+                //->where('t.NOLIAISON', $noliaison)
+                ->groupby('dates')
                 ->get()
                 ->getResult();
         }

@@ -101,21 +101,25 @@
                 . view('clients/vue_affichertraverse', $data)
                 . view('Templates/Footer');
         }
-        public function traversetab($noliaison, $dateTraversee = null)
+       public function traversetab($noliaison, $nosecteur = null)
         {
             $data['TitreDeLaPage'] = 'Horaires des traversées';
             $modSec = new ModeleHoraire();
             $modcate = new modelecategorie();
             $data['nomsecteur'] = $modSec->findall();
             $data['lescatégories'] = $modcate->findall();
-                $modLiaisons = new ModeleLiaisons();
-                $modperiode = new ModeleLiaisons();
-                $data['uneliaison'] = $modLiaisons->getport($noliaison);
-                $data['lesperiodes'] = $modperiode->getperiode($noliaison);
-                $data['traversees'] = $modSec->getLesTraverseesBateaux($noliaison, $dateTraversee);
-                return view('Templates/Header')
-                    . view('clients/vue_traversetab', $data)
-                    . view('Templates/Footer');
+
+            $modLiaisons = new ModeleLiaisons();
+            $modperiode = new ModeleLiaisons();
+            $data['uneliaison'] = $modLiaisons->getport($noliaison);
+
+            // Seulement si $nosecteur est fourni
+            $data['lesperiodes'] = $nosecteur ? $modperiode->getperiode($nosecteur) : [];
+            $data['traversees'] = $modSec->getLesTraverseesBateaux($noliaison);
+
+            return view('Templates/Header')
+                . view('clients/vue_traversetab', $data)
+                . view('Templates/Footer');
         }
         
     }

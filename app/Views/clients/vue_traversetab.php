@@ -17,10 +17,11 @@
                 <h3 class="card-title">Horaires des traversées</h3>
                 Choisissez votre créneau :
                 <br>
+                <form method = "post">
                     <select name="jour" class="form-select mb-2">
                         <option value="laison"><?php 
                         foreach ($uneliaison as $uneLiaison) {
-                            echo $uneLiaison->portdepart.' -> '.$uneLiaison->portarrivee;
+                            echo "<option>".$uneLiaison->portdepart.' -> '.$uneLiaison->portarrivee."</option>";
                         }
                         ?></option>
                     </select>
@@ -28,12 +29,13 @@
                         <option value="periode">
                             <?php 
                                 foreach ($lesperiodes as $uneperiode) {
-                                echo $uneperiode->DATEDEBUT.' -> '.$uneperiode->DATEFIN;
+                                echo "<option>".$uneperiode->dates."</option>";
                                 }
                             ?>
                         </option>
                     </select>
                     <input type="submit" value="Valider" class="btn btn-danger mt-2" name="bouton">
+                </form>
             </div>
         </div>
         <!-- tableau : Affichage des résulstats -->
@@ -45,7 +47,7 @@
           <tr>
             <th>N°</th>
             <th>Heure</th>
-            <th>Bateau</th>
+            <th> Bateau </th>
             <?php foreach ($lescatégories as $categorie)
             {
                 echo "<th>". $categorie->LETTRECATEGORIE.' '.$categorie->LIBELLE. "</th>";
@@ -54,7 +56,7 @@
         </thead>
         <tbody>
           
-        <?php if (empty($traversees)) : ?>
+        <?php if (!isset($_POST['bouton'])) : ?>
         <tr>
             <td colspan="5">Aucune traversée disponible pour cette date.</td>
         </tr>
