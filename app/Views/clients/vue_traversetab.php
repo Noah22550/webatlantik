@@ -40,7 +40,6 @@
         </div>
         <!-- tableau : Affichage des résulstats -->
             <div class="container">
-               <!--  if !isset submit -->
       <h2>Traversée</h2>
       <table class="table">
         <thead>
@@ -55,7 +54,6 @@
             </tr>
         </thead>
         <tbody>
-          
         <?php if (!isset($_POST['bouton'])) {
             echo '<tr>
                 <td colspan="5">Aucune traversée disponible pour cette date.</td>
@@ -74,7 +72,6 @@
                     echo "<td> " .$uneTraversee->NOM ." </td>";
                 echo "</tr>";
                 }
-                
             }
         ?>
         </tbody>
