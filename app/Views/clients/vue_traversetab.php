@@ -44,15 +44,15 @@
       <h2>Traversée</h2>
       <table class="table">
         <thead>
-          <tr>
-            <th>N°</th>
-            <th>Heure</th>
-            <th> Bateau </th>
-            <?php foreach ($lescatégories as $categorie)
-            {
-                echo "<th>". $categorie->LETTRECATEGORIE.' '.$categorie->LIBELLE. "</th>";
-            }?>
-          </tr>
+            <tr>
+                <th>N°</th>
+                <th>Heure</th>
+                <th> Bateau </th>
+                <?php foreach ($lescatégories as $categorie)
+                {
+                    echo "<th>". $categorie->LETTRECATEGORIE.' '.$categorie->LIBELLE. "</th>";
+                }?>
+            </tr>
         </thead>
         <tbody>
           

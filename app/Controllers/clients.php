@@ -114,7 +114,7 @@
             $data['uneliaison'] = $modLiaisons->getport($noliaison);
 
             // Seulement si $nosecteur est fourni
-            $data['lesperiodes'] = $nosecteur ? $modperiode->getperiode($nosecteur) : [];
+            $data['lesperiodes'] = $modperiode->getperiode($nosecteur);
             $data['traversees'] = $modSec->getLesTraverseesBateaux($noliaison);
 
             return view('Templates/Header')

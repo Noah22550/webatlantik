@@ -41,7 +41,7 @@
         }
         public function getperiode($noliaison){
             return $this->select('date(DATEHEUREDEPART) as dates')
-                ->from('traversee t')
+                ->from('traversee t ')
                 //->where('t.NOLIAISON', $noliaison)
                 ->groupby('dates')
                 ->get()
