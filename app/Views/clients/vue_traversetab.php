@@ -10,30 +10,22 @@
             </div>
         </div>
     </div>
-    <!-- Card 2 : Formulaire créneau -->
+    <!-- Card 2 : créneau -->
     <div class="col-md-4">
-        <div class="card shadow p-7 mb-8 bg-body rounded">
+        <div class="card shadow p-10 mb-12">
             <div class="card-body">
                 <h3 class="card-title">Horaires des traversées</h3>
                 Choisissez votre créneau :
                 <br>
                 <form method = "post">
-                    <select name="jour" class="form-select mb-2">
-                        <option value="laison"><?php 
+                    <select name="liaison" class="form-select mb-2">
+                        <option value="liaison"><?php 
                         foreach ($uneliaison as $uneLiaison) {
-                            echo "<option>".$uneLiaison->portdepart.' -> '.$uneLiaison->portarrivee."</option>";
+                            echo "<option value='".$uneLiaison->NOLIAISON."'>".$uneLiaison->portdepart.' -> '.$uneLiaison->portarrivee."</option>";
                         }
                         ?></option>
                     </select>
-                    <select name="partie_de_la_journee" class="form-select mb-1">
-                        <option value="periode">
-                            <?php 
-                                foreach ($lesperiodes as $uneperiode) {
-                                echo "<option>".$uneperiode->dates."</option>";
-                                }
-                            ?>
-                        </option>
-                    </select>
+                    <input type ="date" name="periode" class="form-control mb-2">
                     <input type="submit" value="Valider" class="btn btn-danger mt-2" name="bouton">
                 </form>
             </div>
@@ -41,8 +33,8 @@
         <!-- tableau : Affichage des résulstats -->
             <div class="container">
       <h2>Traversée</h2>
-      <table class="table">
-        <thead>
+        <table class="table">
+            <thead class="table-dark">
             <tr>
                 <th>N°</th>
                 <th>Heure</th>
@@ -60,17 +52,14 @@
             </tr>';
             }
             else {
-                if (empty($lesperiodes)){
-                    echo '<tr>
-                        <td colspan="5">Choisissez une date.</td>
-                    </tr>';
-                }
                 foreach ($traversees as $uneTraversee) {
-                echo "<tr>";
-                    echo "<td>" .$uneTraversee->NOTRAVERSEE ."</td>";
-                    echo "<td>" . $uneTraversee->HEURE ." </td>" ;
-                    echo "<td> " .$uneTraversee->NOM ." </td>";
-                echo "</tr>";
+                    if ($_POST['liaison'] == $uneTraversee->NOLIAISON and $_POST['periode']) {   
+                        echo "<tr>";
+                            echo "<td>" .$uneTraversee->Numero ."</td>";
+                            echo "<td>" . $uneTraversee->heure ." </td>" ;
+                            echo "<td> " .$uneTraversee->NOM ." </td>";
+                        echo "</tr>";
+                    }
                 }
             }
         ?>

@@ -28,13 +28,13 @@
                     ->get()
                     ->getResult();
         }
-        public function getport($noliaison){
-            return $this->select('p.NOM as portdepart, po.NOM as portarrivee')
+        public function getport($Nosecteur){
+            return $this->select('l.NOLIAISON, p.NOM as portdepart, po.NOM as portarrivee')
                 ->from('liaison l')
                 ->join('port p', 'p.NOPORT = l.NOPORT_DEPART')
                 ->join('port po', 'po.NOPORT = l.NOPORT_ARRIVEE')
+                ->where('l.NOSECTEUR', $Nosecteur)
                 ->groupby('p.NOM, po.NOM')
-                ->where('l.NOLIAISON', $noliaison)
                 ->get()
                 ->getResult();
         }
