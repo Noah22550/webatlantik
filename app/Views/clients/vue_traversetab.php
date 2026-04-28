@@ -19,11 +19,11 @@
                 <br>
                 <form method = "post">
                     <select name="liaison" class="form-select mb-2">
-                        <option value="liaison"><?php 
+                        <?php 
                         foreach ($uneliaison as $uneLiaison) {
                             echo "<option value='".$uneLiaison->NOLIAISON."'>".$uneLiaison->portdepart.' -> '.$uneLiaison->portarrivee."</option>";
                         }
-                        ?></option>
+                        ?>
                     </select>
                     <input type ="date" name="periode" class="form-control mb-2">
                     <input type="submit" value="Valider" class="btn btn-danger mt-2" name="bouton">
@@ -31,8 +31,8 @@
             </div>
         </div>
         <!-- tableau : Affichage des résulstats -->
-            <div class="container">
-      <h2>Traversée</h2>
+    <div class="container">
+      <h3>Traversée</h3>
         <table class="table">
             <thead class="table-dark">
             <tr>
@@ -48,23 +48,30 @@
         <tbody>
         <?php if (!isset($_POST['bouton'])) {
             echo '<tr>
-                <td colspan="5">Aucune traversée disponible pour cette date.</td>
+                <td colspan="5">veuillez choisir une liaison et une date.</td>
             </tr>';
             }
             else {
-                foreach ($traversees as $uneTraversee) {
-                    if ($_POST['liaison'] == $uneTraversee->NOLIAISON and $_POST['periode']) {   
-                        echo "<tr>";
-                            echo "<td>" .$uneTraversee->Numero ."</td>";
-                            echo "<td>" . $uneTraversee->heure ." </td>" ;
-                            echo "<td> " .$uneTraversee->NOM ." </td>";
-                        echo "</tr>";
+                echo "<tr>";
+                    foreach ($traversees as $uneTraversee) {
+                        foreach ($capamax as $uneCapamax) {
+                            foreach ($quantiteEnr as $uneQuantiteEnr) {
+                        
+                        if ($_POST['liaison'] == $uneTraversee->NOLIAISON and $_POST['periode']) {   
+                            
+                                echo "<td>" .$uneTraversee->Numero ."</td>";
+                                echo "<td>" . $uneTraversee->heure ." </td>" ;
+                                echo "<td> " .$uneTraversee->NOM ." </td>";
+                                echo "<td>" . $uneCapamax->CAPACITEMAX . $uneQuantiteEnr->quantite .  "</td>";
+                            }
+                        }
+                                  
                     }
                 }
+                echo "</tr>";
             }
         ?>
         </tbody>
       </table>
-    </div>
     </div>
 </div>

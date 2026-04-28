@@ -114,7 +114,8 @@
             $data['uneliaison'] = $modLiaisons->getport($nosecteur);
             $data['lesperiodes'] = $modperiode->getperiode();
             $data['traversees'] = $modSec->getLesTraverseesBateaux();
-            
+            $data['capamax'] = $modSec->getCapaciteMaximale();
+            $data['quantiteEnr'] = $modSec->getQuantiteEnregistree();
             return view('Templates/Header')
                 . view('clients/vue_traversetab', $data)
                 . view('Templates/Footer');
