@@ -45,33 +45,31 @@
                 }?>
             </tr>
         </thead>
-        <tbody>
-        <?php if (!isset($_POST['bouton'])) {
-            echo '<tr>
-                <td colspan="5">veuillez choisir une liaison et une date.</td>
-            </tr>';
-            }
-            else {
-                echo "<tr>";
-                    foreach ($traversees as $uneTraversee) {
+            <tbody>
+            <?php if (!isset($_POST['bouton'])) {
+                echo '<tr>
+                    <td colspan="5">Veuillez choisir une liaison et une date.</td>
+                </tr>';
+            } else {
+                foreach ($traversees as $uneTraversee) {
+                    if ($_POST['liaison'] == $uneTraversee->NOLIAISON && $_POST['periode']) {
+                        echo "<tr>";
+                        echo "<td>" . $uneTraversee->Numero . "</td>";
+                        echo "<td>" . $uneTraversee->heure . "</td>";
+                        echo "<td>" . $uneTraversee->NOM . "</td>";
+
                         foreach ($capamax as $uneCapamax) {
                             foreach ($quantiteEnr as $uneQuantiteEnr) {
-                        
-                        if ($_POST['liaison'] == $uneTraversee->NOLIAISON and $_POST['periode']) {   
-                            
-                                echo "<td>" .$uneTraversee->Numero ."</td>";
-                                echo "<td>" . $uneTraversee->heure ." </td>" ;
-                                echo "<td> " .$uneTraversee->NOM ." </td>";
-                                echo "<td>" . $uneCapamax->CAPACITEMAX . $uneQuantiteEnr->quantite .  "</td>";
+                                echo "<td>" . $uneCapamax->CAPACITEMAX . " / " . $uneQuantiteEnr->quantite . "</td>";
                             }
                         }
-                                  
+
+                        echo "</tr>";
                     }
                 }
-                echo "</tr>";
             }
-        ?>
-        </tbody>
+            ?>
+            </tbody>
       </table>
     </div>
 </div>
