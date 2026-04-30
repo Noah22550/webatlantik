@@ -41,7 +41,7 @@
                 <th> Bateau </th>
                 <?php foreach ($lescatégories as $categorie)
                 {
-                    echo "<th>". $categorie->LETTRECATEGORIE.' '.$categorie->LIBELLE. "</th>";
+                    echo "<th value='". $categorie->LETTRECATEGORIE."'>". $categorie->LETTRECATEGORIE.' '.$categorie->LIBELLE. "</th>";
                 }?>
             </tr>
         </thead>
@@ -54,14 +54,13 @@
                 foreach ($traversees as $uneTraversee) {
                     if ($_POST['liaison'] == $uneTraversee->NOLIAISON && $_POST['periode']) {
                         echo "<tr>";
-                        echo "<td>" . $uneTraversee->Numero . "</td>";
+                        echo "<td value='" . $uneTraversee->Numero . "'>" . $uneTraversee->Numero . "</td>";
                         echo "<td>" . $uneTraversee->heure . "</td>";
                         echo "<td>" . $uneTraversee->NOM . "</td>";
-
-                        foreach ($capamax as $uneCapamax) {
-                            foreach ($quantiteEnr as $uneQuantiteEnr) {
-                                echo "<td>" . $uneCapamax->CAPACITEMAX . " / " . $uneQuantiteEnr->quantite . "</td>";
-                            }
+                        foreach ($lescatégories as $categorie) {
+                            $lettre  = $categorie->LETTRECATEGORIE;
+                            $nobateau = $uneTraversee->NOBATEAU;
+                                echo "<td>" . $resultat[$nobateau][$lettre] . "</td>";
                         }
 
                         echo "</tr>";

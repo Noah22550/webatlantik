@@ -108,14 +108,23 @@
             $modcate = new modelecategorie();
             $data['nomsecteur'] = $modSec->findall();
             $data['lescatégories'] = $modcate->findall();
-
             $modLiaisons = new ModeleLiaisons();
             $modperiode = new ModeleLiaisons();
-            $data['uneliaison'] = $modLiaisons->getport($nosecteur);
+            $data['uneliaison']  = $modLiaisons->getport($nosecteur);
             $data['lesperiodes'] = $modperiode->getperiode();
-            $data['traversees'] = $modSec->getLesTraverseesBateaux();
-            $data['capamax'] = $modSec->getCapaciteMaximale();
-            $data['quantiteEnr'] = $modSec->getQuantiteEnregistree();
+            $data['traversees']  = $modSec->getLesTraverseesBateaux();
+            $data['resultat']    = [];
+            foreach ($data['lescatégories'] as $categorie) {
+                foreach ($data['traversees'] as $uneTraversee) {
+                    // Récoupérer la capacité maximale pour la catégorie et la traversée
+                    $capamax    = $modSec->getCapaciteMaximale($categorie->LETTRECATEGORIE,  $uneTraversee->Numero);
+                    // récupérer la quantité réservée pour la catégorie et la traversée
+                    $enregistree = $modSec->getQuantiteEnregistree( $categorie->LETTRECATEGORIE, $uneTraversee->Numero);
+                    // le fameux calcul
+                    $data['resultat'][$uneTraversee->NOBATEAU][$categorie->LETTRECATEGORIE] = (string)(int)$capamax - (int)$enregistree;
+                }
+            }
+            
             return view('Templates/Header')
                 . view('clients/vue_traversetab', $data)
                 . view('Templates/Footer');
