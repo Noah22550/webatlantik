@@ -58,6 +58,7 @@
                 ->groupby('typ.libelle, typ.NOTYPE, typ.LETTRECATEGORIE, tarifer.TARIF')
                 ->where('tr.NOTRAVERSEE', $notraversee)
                 ->get()
+                
                 ->getResult();
         }
     }
