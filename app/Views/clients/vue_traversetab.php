@@ -54,7 +54,7 @@
                 foreach ($traversees as $uneTraversee) {
                     if ($_POST['liaison'] == $uneTraversee->NOLIAISON && $_POST['periode']) {
                         echo "<tr>";
-                            echo "<td value='" . $uneTraversee->Numero . "'>" .anchor('traversee/'.$uneTraversee->Numero, $uneTraversee->Numero) . "</td>";
+                            echo "<td value='" . $uneTraversee->Numero . "'>" .anchor('reserve/'.$uneTraversee->Numero, $uneTraversee->Numero) . "</td>";
                             echo "<td>" . $uneTraversee->heure . "</td>";
                             echo "<td>" . $uneTraversee->NOM . "</td>";
                             foreach ($resultat as $uneReserve) {

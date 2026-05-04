@@ -116,41 +116,47 @@
             $data['traversees']  = $modSec->getLesTraverseesBateaux();
             $data['resultat'] = [];
 
-foreach ($data['lescatégories'] as $categorie) {
-    foreach ($data['traversees'] as $uneTraversee) {
+            foreach ($data['lescatégories'] as $categorie) {
+                foreach ($data['traversees'] as $uneTraversee) {
 
-        $capamaxResult    = $modSec->getCapaciteMaximale();
-        $enregistreeResult = $modSec->getQuantiteEnregistree();
+                    $capamaxResult    = $modSec->getCapaciteMaximale();
+                    $enregistreeResult = $modSec->getQuantiteEnregistree();
 
-        // Chercher la bonne ligne dans les résultats
-        $capamax = 0;
-        foreach ($capamaxResult as $res) {
-            if ($res->LETTRECATEGORIE == $categorie->LETTRECATEGORIE 
-                && $res->NOBATEAU == $uneTraversee->NOBATEAU) {
-                $capamax = (int)$res->CAPACITEMAX;
-                break;
-            }
-        }
+                    // Chercher la bonne ligne dans les résultats
+                    $capamax = 0;
+                    foreach ($capamaxResult as $res) {
+                        if ($res->LETTRECATEGORIE == $categorie->LETTRECATEGORIE 
+                            && $res->NOBATEAU == $uneTraversee->NOBATEAU) {
+                            $capamax = (int)$res->CAPACITEMAX;
+                            break;
+                        }
+                    }
 
-            $enregistree = 0;
-            foreach ($enregistreeResult as $res2) {
-                if ($res2->LETTRECATEGORIE == $categorie->LETTRECATEGORIE 
-                    && $res2->NOTRAVERSEE == $uneTraversee->Numero) {
-                    $enregistree = (int)$res2->quantite;
-                    break;
+                        $enregistree = 0;
+                        foreach ($enregistreeResult as $res2) {
+                            if ($res2->LETTRECATEGORIE == $categorie->LETTRECATEGORIE 
+                                && $res2->NOTRAVERSEE == $uneTraversee->Numero) {
+                                $enregistree = (int)$res2->quantite;
+                                break;
+                            }
+                        }
+                        $data['resultat'][] = (object)[
+                            'LETTRECATEGORIE' => $categorie->LETTRECATEGORIE,
+                            'NOTRAVERSEE'     => $uneTraversee->Numero,
+                            'NOLIAISON'       => $uneTraversee->NOLIAISON,
+                            'quantite'        => $capamax - $enregistree,
+                        ];
+                    }
                 }
-            }
-
-            $data['resultat'][] = (object)[
-                'LETTRECATEGORIE' => $categorie->LETTRECATEGORIE,
-                'NOTRAVERSEE'     => $uneTraversee->Numero,
-                'NOLIAISON'       => $uneTraversee->NOLIAISON,
-                'quantite'        => $capamax - $enregistree,
-            ];
-        }
-    }
             return view('Templates/Header')
                 . view('clients/vue_traversetab', $data)
+                . view('Templates/Footer');
+        }
+        public function reserve()
+        {
+            $data['TitreDeLaPage'] = 'Reservez VOS PLACES !!!';
+            return view('Templates/Header', $data)
+                . view('clients/vue_reserve', $data)
                 . view('Templates/Footer');
         }
     }

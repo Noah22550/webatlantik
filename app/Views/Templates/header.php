@@ -15,7 +15,8 @@
             $session = session();
             if(!is_null($session->get('mel'))) : ?>
                 <span class="text-white me-3">
-                    Connecté : <strong><?php echo $session->get('mel'); ?></strong>
+                    Connecté : <strong><?php echo $session->get('nom'); ?></strong>
+                    No Client : <strong><?php echo $session->get('noclient'); ?></strong>
                 </span>
             <?php endif; ?>
             <?php if(!is_null($session->get('mel'))) : ?> 
@@ -27,7 +28,7 @@
                     <a class="btn btn-warning btn-sm me-2" href="<?php echo site_url('liaisonssecteur') ?>">
                     Voir les liaisons
                     </a>
-            <?php if(!is_null($session->get('mel'))) : ?> 
+            <?php if(is_null($session->get('mel'))) : ?> 
                 <a class="btn btn-outline-light btn-sm me-2" href="<?php echo site_url('seconnecter') ?>">
                     Se connecter
                 </a>
