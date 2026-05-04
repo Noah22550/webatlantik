@@ -152,12 +152,12 @@
                 . view('clients/vue_traversetab', $data)
                 . view('Templates/Footer');
         }
-        public function reserve()
+        public function reserve($notraversee)
         {
             $data['TitreDeLaPage'] = 'Reservez VOS PLACES !!!';
             $modeTarif = new ModeleTarif();
-            $data['libelle'] = $modeTarif->getlibelle();
-            $data['tarif'] = $modeTarif->getTarif();    
+            $data['libelle'] = $modeTarif->getTarif($notraversee);
+            $data['tarif'] = $modeTarif->getTarif($notraversee);    
             return view('Templates/Header', $data)
                 . view('clients/vue_reserve', $data)
                 . view('Templates/Footer');

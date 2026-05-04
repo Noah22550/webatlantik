@@ -49,17 +49,14 @@
                 ->get()
                 ->getResult();
         }
-        public function getlibelle(){
-            return $this->select('type.libelle as libcat, type.NOTYPE, type.LETTRECATEGORIE')
-                ->from('type ')
-                ->groupby('type.libelle')
-                ->get()
-                ->getResult();
-        }
-        public function getTarif()
+        public function getTarif($notraversee)
         {
-            return $this->select('TARIF, NOTYPE, LETTRECATEGORIE')
-                ->groupby('TARIF')
+            return $this->select('tarifer.TARIF, typ.libelle as libcat, typ.NOTYPE, typ.LETTRECATEGORIE')
+                ->from('tarifer tarifer')
+                ->join('type typ', 'typ.NOTYPE = tarifer.NOTYPE', 'inner')
+                ->join('traversee tr', 'tr.NOLIAISON = tarifer.NOLIAISON', 'inner')
+                ->groupby('typ.libelle, typ.NOTYPE, typ.LETTRECATEGORIE, tarifer.TARIF')
+                ->where('tr.NOTRAVERSEE', $notraversee)
                 ->get()
                 ->getResult();
         }
