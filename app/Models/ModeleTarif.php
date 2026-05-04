@@ -49,5 +49,19 @@
                 ->get()
                 ->getResult();
         }
+        public function getlibelle(){
+            return $this->select('type.libelle as libcat, type.NOTYPE, type.LETTRECATEGORIE')
+                ->from('type ')
+                ->groupby('type.libelle')
+                ->get()
+                ->getResult();
+        }
+        public function getTarif()
+        {
+            return $this->select('TARIF, NOTYPE, LETTRECATEGORIE')
+                ->groupby('TARIF')
+                ->get()
+                ->getResult();
+        }
     }
 ?>

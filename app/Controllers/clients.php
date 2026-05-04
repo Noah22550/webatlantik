@@ -155,6 +155,9 @@
         public function reserve()
         {
             $data['TitreDeLaPage'] = 'Reservez VOS PLACES !!!';
+            $modeTarif = new ModeleTarif();
+            $data['libelle'] = $modeTarif->getlibelle();
+            $data['tarif'] = $modeTarif->getTarif();    
             return view('Templates/Header', $data)
                 . view('clients/vue_reserve', $data)
                 . view('Templates/Footer');
