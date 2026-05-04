@@ -54,19 +54,22 @@
                 foreach ($traversees as $uneTraversee) {
                     if ($_POST['liaison'] == $uneTraversee->NOLIAISON && $_POST['periode']) {
                         echo "<tr>";
-                        echo "<td value='" . $uneTraversee->Numero . "'>" . $uneTraversee->Numero . "</td>";
-                        echo "<td>" . $uneTraversee->heure . "</td>";
-                        echo "<td>" . $uneTraversee->NOM . "</td>";
-                        foreach ($lescatégories as $categorie) {
-                            $lettre  = $categorie->LETTRECATEGORIE;
-                            $nobateau = $uneTraversee->NOBATEAU;
-                                echo "<td>" . $resultat[$nobateau][$lettre] . "</td>";
-                        }
-
+                            echo "<td value='" . $uneTraversee->Numero . "'>" .anchor('traversee/'.$uneTraversee->Numero, $uneTraversee->Numero) . "</td>";
+                            echo "<td>" . $uneTraversee->heure . "</td>";
+                            echo "<td>" . $uneTraversee->NOM . "</td>";
+                            foreach ($resultat as $uneReserve) {
+                                    foreach ($lescatégories as $categorie) {
+                                    If ($uneReserve->NOTRAVERSEE == $uneTraversee->Numero) {
+                                        if ($uneReserve->LETTRECATEGORIE == $categorie->LETTRECATEGORIE) {
+                                            echo "<td>" . $uneReserve->quantite . "</td>";
+                                        }
+                                    }
+                                    }
+                                }
+                            }
                         echo "</tr>";
                     }
                 }
-            }
             ?>
             </tbody>
       </table>

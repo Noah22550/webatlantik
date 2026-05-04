@@ -101,7 +101,8 @@
                 . view('clients/vue_affichertraverse', $data)
                 . view('Templates/Footer');
         }
-       public function traversetab($nosecteur)
+
+        public function traversetab($nosecteur)
         {
             $data['TitreDeLaPage'] = 'Horaires des traversées';
             $modSec = new ModeleHoraire();
@@ -113,22 +114,44 @@
             $data['uneliaison']  = $modLiaisons->getport($nosecteur);
             $data['lesperiodes'] = $modperiode->getperiode();
             $data['traversees']  = $modSec->getLesTraverseesBateaux();
-            $data['resultat']    = [];
-            foreach ($data['lescatégories'] as $categorie) {
-                foreach ($data['traversees'] as $uneTraversee) {
-                    // Récoupérer la capacité maximale pour la catégorie et la traversée
-                    $capamax    = $modSec->getCapaciteMaximale($categorie->LETTRECATEGORIE,  $uneTraversee->Numero);
-                    // récupérer la quantité réservée pour la catégorie et la traversée
-                    $enregistree = $modSec->getQuantiteEnregistree( $categorie->LETTRECATEGORIE, $uneTraversee->Numero);
-                    // le fameux calcul
-                    $data['resultat'][$uneTraversee->NOBATEAU][$categorie->LETTRECATEGORIE] = (string)(int)$capamax - (int)$enregistree;
+            $data['resultat'] = [];
+
+foreach ($data['lescatégories'] as $categorie) {
+    foreach ($data['traversees'] as $uneTraversee) {
+
+        $capamaxResult    = $modSec->getCapaciteMaximale();
+        $enregistreeResult = $modSec->getQuantiteEnregistree();
+
+        // Chercher la bonne ligne dans les résultats
+        $capamax = 0;
+        foreach ($capamaxResult as $res) {
+            if ($res->LETTRECATEGORIE == $categorie->LETTRECATEGORIE 
+                && $res->NOBATEAU == $uneTraversee->NOBATEAU) {
+                $capamax = (int)$res->CAPACITEMAX;
+                break;
+            }
+        }
+
+            $enregistree = 0;
+            foreach ($enregistreeResult as $res2) {
+                if ($res2->LETTRECATEGORIE == $categorie->LETTRECATEGORIE 
+                    && $res2->NOTRAVERSEE == $uneTraversee->Numero) {
+                    $enregistree = (int)$res2->quantite;
+                    break;
                 }
             }
-            
+
+            $data['resultat'][] = (object)[
+                'LETTRECATEGORIE' => $categorie->LETTRECATEGORIE,
+                'NOTRAVERSEE'     => $uneTraversee->Numero,
+                'NOLIAISON'       => $uneTraversee->NOLIAISON,
+                'quantite'        => $capamax - $enregistree,
+            ];
+        }
+    }
             return view('Templates/Header')
                 . view('clients/vue_traversetab', $data)
                 . view('Templates/Footer');
         }
-        
     }
 ?>

@@ -12,7 +12,7 @@
 
          public function getQuantiteEnregistree()
         {
-            return $this->select('e.QUANTITERESERVEE as quantite')
+            return $this->select('e.QUANTITERESERVEE as quantite, r.NOTRAVERSEE, e.LETTRECATEGORIE')
                 ->from('reservation r')
                 ->join('enregistrer e', 'r.NORESERVATION = e.NORESERVATION')
                 ->join('type ty', 'ty.NOTYPE = ty.NOTYPE', 'inner')
