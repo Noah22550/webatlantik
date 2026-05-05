@@ -51,11 +51,12 @@
         }
         public function getTarif($notraversee)
         {
-            return $this->select('tarifer.TARIF, typ.libelle as libcat, typ.NOTYPE, typ.LETTRECATEGORIE, tr.NOLIAISON, tr.NOTRAVERSEE')
+            return $this->select('tarifer.TARIF, typ.libelle as libcat, typ.NOTYPE, typ.LETTRECATEGORIE, tr.NOLIAISON, tr.NOTRAVERSEE, per.DATEDEBUT, per.DATEFIN, tr.DATEHEUREDEPART')
                 ->from('tarifer tarifer')
                 ->join('type typ', 'typ.NOTYPE = tarifer.NOTYPE', 'inner')
                 ->join('traversee tr', 'tr.NOLIAISON = tarifer.NOLIAISON', 'inner')
-                ->groupby('typ.libelle, typ.NOTYPE, typ.LETTRECATEGORIE, tarifer.TARIF')
+                ->join('periode per', 'per.NOPERIODE = tarifer.NOPERIODE', 'inner')
+                ->groupby('typ.libelle, typ.NOTYPE, typ.LETTRECATEGORIE, tarifer.TARIF, tr.NOLIAISON, tr.NOTRAVERSEE, per.DATEDEBUT, per.DATEFIN, tr.DATEHEUREDEPART')
                 ->where('tr.NOTRAVERSEE', $notraversee)
                 ->get()
                 

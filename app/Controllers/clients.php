@@ -152,12 +152,20 @@
         }
         public function reserve($notraversee)
         {
-            $data['TitreDeLaPage'] = 'Reservez VOS PLACES !!!';
             $modeTarif = new ModeleTarif();
             $modeclient = new ModeleClients();
-            $data['libelle'] = $modeTarif->getTarif($notraversee);
-            $data['tarif'] = $modeTarif->getTarif($notraversee);  
+            $modeliaisons = new ModeleLiaisons();
+            $res = $modeTarif->getTarif($notraversee);
             $data['client'] = $modeclient->findall();
+            $data['entete'] = $modeliaisons->getenteteprtarif($notraversee);
+            foreach ($res as $uneLigne) {
+                if($uneLigne->DATEHEUREDEPART <= $uneLigne->DATEFIN && $uneLigne->DATEHEUREDEPART >= $uneLigne->DATEDEBUT) {
+                    $data['tarifs'] = $modeTarif->getTarif($notraversee);
+                    $data['entete'] = $modeliaisons->getenteteprtarif($notraversee);
+                    $data['libelle'] = $modeTarif->getTarif($notraversee);
+                }
+            }
+
             return view('Templates/Header', $data)
                 . view('clients/vue_reserve', $data)
                 . view('Templates/Footer');

@@ -6,12 +6,16 @@
 </head>
 <body>
 <div class="card p-2 mb-2 bg-body rounded shadow-sm" style="max-width: 300px;">
-    <h5 class="card-title mb-2">Client</h5>
         <div class="card-body bg-light p-2 rounded">
-        <?php 
-        foreach ($libelle as $info) {
-        }
-        ?>
+            <?php 
+            foreach ($entete as $info) {
+                echo 
+                '<strong>Numero Traversée : </strong>'.$info->notraversee.'<br>' .
+                '<strong>Liaison : </strong>'.$info->portdépart.' -> '.$info->portarrivé.'<br>';
+            }
+            ?>
+        </div>
+</div>
 <div class="card p-2 mb-2 bg-body rounded shadow-sm" style="max-width: 300px;">
     <h5 class="card-title mb-2">Client</h5>
         <div class="card-body bg-light p-2 rounded">
@@ -36,33 +40,24 @@
         <th>Tarifs</th>
         <th>Quantitées</th>
       </tr>
-
     <?php 
-      $i = 0;
-      if (empty($libelle) || empty($tarif)) {
-        echo "<div class='alert alert-danger' role='alert'>";
-            echo "pas de tarif pour cette traversée";
-        echo "</div>";
-      } else {
-                foreach ($libelle as $cat) {
-                foreach ($tarif as $unTarif) {
+    $i = 0;
+    foreach ($libelle as $cat) {
                 echo "<tr>";
                     echo "<td>";
-                        echo "<input type='hidden' name='libelle[$i][Id]' value='" . $cat->libcat . "' />";
+                        echo "<input type='hidden' name='libelle[$i][libelle]' value='" . $cat->libcat . "' />";
                         echo $cat->libcat . ' - ';
                     echo "</td>";
                         echo "<td>";
-                            echo "<input type='hidden' name='libelle[$i][Id]' value='" . $unTarif->TARIF . "' />";
-                            echo $unTarif->TARIF . " €";
+                            echo "<input type='hidden' name='libelle[$i][tarif]' value='" . $cat->TARIF . "' />";
+                            echo $cat->TARIF . " €";
                         echo "</td>";
                     echo "<td>";
-                        echo "<input type='number' name='[$i][qte]' min='0' />";
+                        echo "<input type='number' name='libelle[$i][qte]' min='0' />";
                     echo "</td>";
                 echo "</tr>";
                 $i++;
-                }
             }
-        }
     ?>
 </table>
 <br>
