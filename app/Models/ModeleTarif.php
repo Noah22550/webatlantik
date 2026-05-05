@@ -51,7 +51,7 @@
         }
         public function getTarif($notraversee)
         {
-            return $this->select('tarifer.TARIF, typ.libelle as libcat, typ.NOTYPE, typ.LETTRECATEGORIE')
+            return $this->select('tarifer.TARIF, typ.libelle as libcat, typ.NOTYPE, typ.LETTRECATEGORIE, tr.NOLIAISON, tr.NOTRAVERSEE')
                 ->from('tarifer tarifer')
                 ->join('type typ', 'typ.NOTYPE = tarifer.NOTYPE', 'inner')
                 ->join('traversee tr', 'tr.NOLIAISON = tarifer.NOLIAISON', 'inner')

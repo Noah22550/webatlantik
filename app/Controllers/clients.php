@@ -125,8 +125,7 @@
                     // Chercher la bonne ligne dans les résultats
                     $capamax = 0;
                     foreach ($capamaxResult as $res) {
-                        if ($res->LETTRECATEGORIE == $categorie->LETTRECATEGORIE 
-                            && $res->NOBATEAU == $uneTraversee->NOBATEAU) {
+                        if ($res->LETTRECATEGORIE == $categorie->LETTRECATEGORIE && $res->NOBATEAU == $uneTraversee->NOBATEAU) {
                             $capamax = (int)$res->CAPACITEMAX;
                             break;
                         }
@@ -134,8 +133,7 @@
 
                         $enregistree = 0;
                         foreach ($enregistreeResult as $res2) {
-                            if ($res2->LETTRECATEGORIE == $categorie->LETTRECATEGORIE 
-                                && $res2->NOTRAVERSEE == $uneTraversee->Numero) {
+                            if ($res2->LETTRECATEGORIE == $categorie->LETTRECATEGORIE && $res2->NOTRAVERSEE == $uneTraversee->Numero) {
                                 $enregistree = (int)$res2->quantite;
                                 break;
                             }
@@ -156,8 +154,10 @@
         {
             $data['TitreDeLaPage'] = 'Reservez VOS PLACES !!!';
             $modeTarif = new ModeleTarif();
+            $modeclient = new ModeleClients();
             $data['libelle'] = $modeTarif->getTarif($notraversee);
-            $data['tarif'] = $modeTarif->getTarif($notraversee);    
+            $data['tarif'] = $modeTarif->getTarif($notraversee);  
+            $data['client'] = $modeclient->findall();
             return view('Templates/Header', $data)
                 . view('clients/vue_reserve', $data)
                 . view('Templates/Footer');
