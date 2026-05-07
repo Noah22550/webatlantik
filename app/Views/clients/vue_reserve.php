@@ -32,36 +32,42 @@
         ?>
     </div>
 </div>
-  <h4>Reservation</h4>
-  <form action='traitementPanier.php' method='post'>
-    <table border="1">
-      <tr>
-        <th>Libellé</th>
-        <th>Tarifs</th>
-        <th>Quantitées</th>
-      </tr>
-    <?php 
-    $i = 0;
-    foreach ($libelle as $cat) {
-                echo "<tr>";
-                    echo "<td>";
-                        echo "<input type='hidden' name='libelle[$i][libelle]' value='" . $cat->libcat . "' />";
-                        echo $cat->libcat . ' - ';
-                    echo "</td>";
+<center>
+    <h4>Reservation</h4>
+    <form action='traitementPanier.php' method='post'>
+        <table border="1">
+        <tr>
+            <th>Libellé</th>
+            <th>Tarifs</th>
+            <th>Quantitées</th>
+        </tr>
+        <?php 
+        $i = 0;
+        foreach ($libelle as $cat) {
+            if($cat->notraversee == $info->notraversee &&  $cat->lettre == $info->lettre && $cat->libcat == $info->libelle) {
+                    echo "<tr>";
                         echo "<td>";
-                            echo "<input type='hidden' name='libelle[$i][tarif]' value='" . $cat->TARIF . "' />";
-                            echo $cat->TARIF . " €";
+                            echo "<input type='hidden' name='libelle[$i][notype]' value='" . $cat->NOTYPE . "' />";
+                            echo "<input type='hidden' name='libelle[$i][lettrecategorie]' value='" . $cat->lettre . "' />";
+                            echo "<input type='hidden' name='libelle[$i][libelle]' value='" . $cat->libcat . "' />";
+                            echo $cat->libcat . ' - ';
                         echo "</td>";
-                    echo "<td>";
-                        echo "<input type='number' name='libelle[$i][qte]' min='0' />";
-                    echo "</td>";
-                echo "</tr>";
-                $i++;
+                            echo "<td>";
+                                echo "<input type='hidden' name='libelle[$i][tarif]' value='" . $cat->TARIF . "' />";
+                                echo $cat->TARIF . " €";
+                            echo "</td>";
+                        echo "<td>";
+                            echo "<input type='number' name='libelle[$i][qte]' min='0' />";
+                        echo "</td>";
+                    echo "</tr>";
+                    $i++;
+                }
             }
-    ?>
-</table>
-<br>
-    <input type="submit" value="Valider panier">
-</form>    
+        ?>
+    </table>
+    <br>
+        <input type="submit" value="Valider panier">
+    </form>
+</center>    
 </body>
 </html>

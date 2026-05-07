@@ -1,8 +1,8 @@
 <div class="row justify-content">
-        <div class="col-md-3">
-            <div class="card shadow p-3 mb-5 bg-body rounded">
-                <div class="card-body">
-                    <h3 class="card-title">Horaires des traversées</h3>
+    <div class="col-md-3">
+        <div class="card shadow p-3 mb-5 bg-body rounded">
+            <div class="card-body">
+                <h3 class="card-title">Horaires des traversées</h3>
                 <?php foreach ($nomsecteur as $unSecteur) {
                     echo '<h3 class="link-danger link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">'.anchor('traversetab/'.$unSecteur->NOSECTEUR, $unSecteur->NOM).'</h3>';
                 }
@@ -10,6 +10,7 @@
             </div>
         </div>
     </div>
+
     <!-- Card 2 : créneau -->
     <div class="col-md-4">
         <div class="card shadow p-10 mb-12">
@@ -17,7 +18,7 @@
                 <h3 class="card-title">Horaires des traversées</h3>
                 Choisissez votre créneau :
                 <br>
-                <form method = "post">
+                <form method="post">
                     <select name="liaison" class="form-select mb-2">
                         <?php 
                         foreach ($uneliaison as $uneLiaison) {
@@ -25,53 +26,56 @@
                         }
                         ?>
                     </select>
-                    <input type ="date" name="periode" class="form-control mb-2">
+                    <input type="date" name="periode" class="form-control mb-2">
                     <input type="submit" value="Valider" class="btn btn-danger mt-2" name="bouton">
                 </form>
             </div>
         </div>
-        <!-- tableau : Affichage des résulstats -->
-    <div class="container">
-      <h3>Traversée</h3>
-        <table class="table">
-            <thead class="table-dark">
-            <tr>
-                <th>N°</th>
-                <th>Heure</th>
-                <th> Bateau </th>
-                <?php foreach ($lescatégories as $categorie)
-                {
-                    echo "<th value='". $categorie->LETTRECATEGORIE."'>". $categorie->LETTRECATEGORIE.' '.$categorie->LIBELLE. "</th>";
-                }?>
-            </tr>
-        </thead>
-            <tbody>
-            <?php if (!isset($_POST['bouton'])) {
-                echo '<tr>
-                    <td colspan="5">Veuillez choisir une liaison et une date.</td>
-                </tr>';
-            } else {
-                foreach ($traversees as $uneTraversee) {
-                    if ($_POST['liaison'] == $uneTraversee->NOLIAISON && $_POST['periode']) {
-                        echo "<tr>";
-                            echo "<td value='" . $uneTraversee->Numero . "'>" .anchor('reserve/'.$uneTraversee->Numero, $uneTraversee->Numero) . "</td>";
-                            echo "<td>" . $uneTraversee->heure . "</td>";
-                            echo "<td>" . $uneTraversee->NOM . "</td>";
-                            foreach ($resultat as $uneReserve) {
-                                    foreach ($lescatégories as $categorie) {
-                                    If ($uneReserve->NOTRAVERSEE == $uneTraversee->Numero) {
-                                        if ($uneReserve->LETTRECATEGORIE == $categorie->LETTRECATEGORIE) {
-                                            echo "<td>" . $uneReserve->quantite . "</td>";
+    </div>
+
+    <!-- Col 3 : tableau -->
+    <div class="col-md-5">
+        <div class="container">
+            <h3>Traversée</h3>
+            <table class="table">
+                <thead class="table-dark">
+                    <tr>
+                        <th>N°</th>
+                        <th>Heure</th>
+                        <th>Bateau</th>
+                        <?php foreach ($lescatégories as $categorie) {
+                            echo "<th value='". $categorie->LETTRECATEGORIE."'>". $categorie->LETTRECATEGORIE.' '.$categorie->LIBELLE. "</th>";
+                        }?>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php if (!isset($_POST['bouton'])) {
+                        echo '<tr>
+                            <td colspan="5">Veuillez choisir une liaison et une date.</td>
+                        </tr>';
+                    } else {
+                        foreach ($traversees as $uneTraversee) {
+                            if ($_POST['liaison'] == $uneTraversee->NOLIAISON && $_POST['periode']) {
+                                echo "<tr>";
+                                    echo "<td value='" . $uneTraversee->Numero . "'>" .anchor('reserve/'.$uneTraversee->Numero, $uneTraversee->Numero) . "</td>";
+                                    echo "<td>" . $uneTraversee->heure . "</td>";
+                                    echo "<td>" . $uneTraversee->NOM . "</td>";
+                                    foreach ($resultat as $uneReserve) {
+                                        foreach ($lescatégories as $categorie) {
+                                            If ($uneReserve->NOTRAVERSEE == $uneTraversee->Numero) {
+                                                if ($uneReserve->LETTRECATEGORIE == $categorie->LETTRECATEGORIE) {
+                                                    echo "<td>" . $uneReserve->quantite . "</td>";
+                                                }
+                                            }
                                         }
                                     }
-                                    }
-                                }
+                                echo "</tr>";
                             }
-                        echo "</tr>";
+                        }
                     }
-                }
-            ?>
-            </tbody>
-      </table>
+                    ?>
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>

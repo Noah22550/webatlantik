@@ -49,11 +49,13 @@
     return $this->select("l.NOLIAISON AS codeliaison, 
                           portd.NOM AS portdépart, 
                           porta.NOM AS portarrivé, 
-                          t.NOTRAVERSEE AS notraversee")
+                          t.NOTRAVERSEE AS notraversee, 
+                          ty.LETTRECATEGORIE AS lettre")
                 ->from('liaison l')
                 ->join('port porta', 'porta.NOPORT = l.NOPORT_ARRIVEE')
                 ->join('port portd', 'portd.NOPORT = l.NOPORT_DEPART')
                 ->join('traversee t', 't.NOLIAISON = l.NOLIAISON')
+                ->join('type ty', 'ty.NOTYPE = ty.NOTYPE', 'inner')
                 ->where('t.NOTRAVERSEE', $notraversee)
                 ->groupBy('l.NOLIAISON, portd.NOM, porta.NOM, t.NOTRAVERSEE')
                 ->get()
