@@ -17,56 +17,37 @@
                 echo csrf_field();
                 ?>
 
-                <div class="mb-3">
-                    <label class="form-label">Nom</label>
-                    <input type="text" name="txtnom" class="form-control" value="<?= set_value('txtnom'); ?>">
-                </div>
+                <!-- Nom -->
+                <input type="text" name="txtnom" class="form-control" 
+                    value="<?= set_value('txtnom', esc($client['nom'])) ?>">
 
-                <div class="mb-3">
-                    <label class="form-label">Prénom</label>
-                    <input type="text" name="txtprenom" class="form-control" value="<?= set_value('txtprenom'); ?>">
-                </div>
+                <!-- Prénom -->
+                <input type="text" name="txtprenom" class="form-control" 
+                    value="<?= set_value('txtprenom', esc($client['prenom'])) ?>">
 
-                <div class="mb-3">
-                    <label class="form-label">Adresse</label>
-                    <input type="text" name="txtadresse" class="form-control" value="<?= set_value('txtadresse'); ?>">
-                </div>
+                <!-- Adresse -->
+                <input type="text" name="txtadresse" class="form-control" 
+                    value="<?= set_value('txtadresse', esc($client['adresse'])) ?>">
 
-                <div class="mb-3">
-                    <label class="form-label">Code postal</label>
-                    <input type="text" name="txtcodepostal" class="form-control" value="<?= set_value('txtcodepostal'); ?>">
-                </div>
+                <!-- Code postal -->
+                <input type="text" name="txtcodepostal" class="form-control" 
+                    value="<?= set_value('txtcodepostal', esc($client['codepostal'])) ?>">
 
-                <div class="mb-3">
-                    <label class="form-label">Ville</label>
-                    <input type="text" name="txtville" class="form-control" value="<?= set_value('txtville'); ?>">
-                </div>
+                <!-- Ville -->
+                <input type="text" name="txtville" class="form-control" 
+                    value="<?= set_value('txtville', esc($client['ville'])) ?>">
 
-                <div class="mb-3">
-                    <label class="form-label">Email</label>
-                    <input type="email" name="txtmel" class="form-control" value="<?= set_value('txtmel'); ?>">
-                </div>
+                <!-- Email -->
+                <input type="email" name="txtmel" class="form-control" 
+                    value="<?= set_value('txtmel', esc($client['mel'])) ?>">
 
-                <div class="mb-3">
-                    <label class="form-label">Téléphone fixe</label>
-                    <input type="text" name="txttelephonefixe" class="form-control" value="<?= set_value('txttelephonefixe'); ?>">
-                </div>
+                <!-- Téléphone fixe -->
+                <input type="text" name="txttelephonefixe" class="form-control" 
+                    value="<?= set_value('txttelephonefixe', esc($client['telephonefixe'])) ?>">
 
-                <div class="mb-3">
-                    <label class="form-label">Téléphone mobile</label>
-                    <input type="text" name="txttelephonemobile" class="form-control" value="<?= set_value('txttelephonemobile'); ?>">
-                </div>
-
-                <div class="mb-3">
-                    <label class="form-label">Mot de passe</label>
-                    <input type="password" name="txtmotdepasse" class="form-control">
-                </div>
-
-                <div class="d-grid">
-                    <button type="submit" class="btn btn-primary">
-                        S'inscrire
-                    </button>
-                </div>
+                <!-- Téléphone mobile -->
+                <input type="text" name="txttelephonemobile" class="form-control" 
+                    value="<?= set_value('txttelephonemobile', esc($client['telephonemobile'])) ?>">
 
                 <?= form_close(); ?>
             </div>

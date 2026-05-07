@@ -44,7 +44,8 @@
             $data['TitreDeLaPage'] = 'Modifier mon compte';
             $modelclient = new ModeleClients();
             $mel = $modelclient->find($noclient);
-            //$session->set('mel', $utilisateurRetourne->MEL);
+            $session = session();
+            $session->set('mel', $utilisateurRetourne->MEL);
 
             if(!$mel) {
                 throw new \CodeIgniter\Exceptions\PageNotFoundException('Client non trouvé');
@@ -69,7 +70,7 @@
             ];
             if (!$this->validate($reglesValidation)) {
                 $data['TitreDeLaPage'] = "Saisie client incorrecte";
-                //$data['client'] = $modelclient->getclient($this->session->get('noclient'));
+                $data['client'] = $modelclient->getclient('noclient');
                 return view('Templates/Header')
                     . view('clients/vue_modifiercompte', $data)
                     . view('Templates/Footer');
@@ -155,16 +156,11 @@
             $modeTarif = new ModeleTarif();
             $modeclient = new ModeleClients();
             $modeliaisons = new ModeleLiaisons();
-            $res = $modeTarif->getTarif($notraversee);
+            $noliaison = $modeTarif->gettarifdeliaison($notraversee);  // retourne un objet
+            $noliaisonId = $noliaison->NOLIAISON;  
             $data['client'] = $modeclient->findall();
             $data['entete'] = $modeliaisons->getenteteprtarif($notraversee);
-            foreach ($res as $uneLigne) {
-                if($uneLigne->DATEHEUREDEPART <= $uneLigne->DATEFIN && $uneLigne->DATEHEUREDEPART >= $uneLigne->DATEDEBUT) {
-                    $data['tarifs'] = $modeTarif->getTarif($notraversee);
-                    $data['entete'] = $modeliaisons->getenteteprtarif($notraversee);
-                    $data['libelle'] = $modeTarif->getTarif($notraversee);
-                }
-            }
+            $data['libelle'] = $modeTarif->getTarif($notraversee, $noliaisonId);
 
             return view('Templates/Header', $data)
                 . view('clients/vue_reserve', $data)

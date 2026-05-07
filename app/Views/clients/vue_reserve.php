@@ -32,7 +32,7 @@
         ?>
     </div>
 </div>
-<center>
+<div class="col-md-5">
     <h4>Reservation</h4>
     <form action='traitementPanier.php' method='post'>
         <table border="1">
@@ -44,7 +44,6 @@
         <?php 
         $i = 0;
         foreach ($libelle as $cat) {
-            if($cat->notraversee == $info->notraversee &&  $cat->lettre == $info->lettre && $cat->libcat == $info->libelle) {
                     echo "<tr>";
                         echo "<td>";
                             echo "<input type='hidden' name='libelle[$i][notype]' value='" . $cat->NOTYPE . "' />";
@@ -62,12 +61,11 @@
                     echo "</tr>";
                     $i++;
                 }
-            }
         ?>
     </table>
     <br>
         <input type="submit" value="Valider panier">
     </form>
-</center>    
+</div>  
 </body>
 </html>
