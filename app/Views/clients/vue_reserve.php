@@ -60,7 +60,7 @@
                         echo "</td>";
                     echo "</tr>";
                     $i++;
-                }
+            }
         ?>
     </table>
     <br>

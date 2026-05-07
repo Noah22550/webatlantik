@@ -45,7 +45,7 @@
             $modelclient = new ModeleClients();
             $mel = $modelclient->find($noclient);
             $session = session();
-            $session->set('mel', $utilisateurRetourne->MEL);
+            //$session->set('mel', $utilisateurRetourne->MEL);
 
             if(!$mel) {
                 throw new \CodeIgniter\Exceptions\PageNotFoundException('Client non trouvé');
@@ -153,18 +153,17 @@
         }
         public function reserve($notraversee)
         {
-            $modeTarif = new ModeleTarif();
-            $modeclient = new ModeleClients();
-            $modeliaisons = new ModeleLiaisons();
-            $noliaison = $modeTarif->gettarifdeliaison($notraversee);  // retourne un objet
-            $noliaisonId = $noliaison->NOLIAISON;  
-            $data['client'] = $modeclient->findall();
-            $data['entete'] = $modeliaisons->getenteteprtarif($notraversee);
-            $data['libelle'] = $modeTarif->getTarif($notraversee, $noliaisonId);
-
-            return view('Templates/Header', $data)
-                . view('clients/vue_reserve', $data)
-                . view('Templates/Footer');
+                $modeTarif = new ModeleTarif();
+                $modeclient = new ModeleClients();
+                $modeliaisons = new ModeleLiaisons();
+                $liaisonResult = $modeTarif->gettarifdeliaison($notraversee);
+                $noliaisonId = $liaisonResult[0]->NOLIAISON; 
+                $data['client'] = $modeclient->findall();
+                $data['entete'] = $modeliaisons->getenteteprtarif($notraversee);
+                $data['libelle'] = $modeTarif->getTarif($notraversee, $noliaisonId);
+                return view('Templates/Header', $data)
+                    . view('clients/vue_reserve', $data)
+                    . view('Templates/Footer');
         }
     }
 ?>

@@ -63,12 +63,11 @@
                 ->join('type typ', 'typ.NOTYPE = tarifer.NOTYPE', 'inner')
                 ->join('traversee tr', 'tr.NOLIAISON = tarifer.NOLIAISON', 'inner')
                 ->join('periode per', 'per.NOPERIODE = tarifer.NOPERIODE', 'inner')
-                ->groupby('typ.libelle, typ.NOTYPE, typ.LETTRECATEGORIE, tarifer.TARIF, tr.NOLIAISON, tr.NOTRAVERSEE, per.DATEDEBUT, per.DATEFIN, tr.DATEHEUREDEPART')
                 ->where('tr.NOTRAVERSEE', $notraversee)
                 ->where('tr.NOLIAISON', $noliaison)
                 ->where('date(tr.DATEHEUREDEPART) >= per.DATEDEBUT AND  date(tr.DATEHEUREDEPART) <= per.DATEFIN ')
-                ->groupby('ty.libelle')
-                ->orderby('typ.LETTRECATEGORIE')
+                ->groupby('typ.libelle')
+                ->orderby('typ.LETTRECATEGORIE', 'ASC')
                 ->get()
                 ->getResult();
         }
