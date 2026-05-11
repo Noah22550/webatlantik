@@ -34,36 +34,39 @@
 </div>
 <div class="col-md-5">
     <h4>Reservation</h4>
-    <form action='traitementPanier.php' method='post'>
-        <table border="1">
-        <tr>
-            <th>Libellé</th>
-            <th>Tarifs</th>
-            <th>Quantitées</th>
-        </tr>
-        <?php 
-        $i = 0;
-        foreach ($libelle as $cat) {
+    <form action='traitementPanier' method='post'>
+        <table class="table table-bordered">
+            <thead class="table-dark">
+                <tr>
+                    <th>Libellé</th>
+                    <th>Tarifs</th>
+                    <th>Quantitées</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php 
+                $i = 0;
+                foreach ($libelle as $cat) {
                     echo "<tr>";
                         echo "<td>";
                             echo "<input type='hidden' name='libelle[$i][notype]' value='" . $cat->NOTYPE . "' />";
                             echo "<input type='hidden' name='libelle[$i][lettrecategorie]' value='" . $cat->lettre . "' />";
                             echo "<input type='hidden' name='libelle[$i][libelle]' value='" . $cat->libcat . "' />";
-                            echo $cat->libcat . ' - ';
+                            echo $cat->libcat;
                         echo "</td>";
-                            echo "<td>";
-                                echo "<input type='hidden' name='libelle[$i][tarif]' value='" . $cat->TARIF . "' />";
-                                echo $cat->TARIF . " €";
-                            echo "</td>";
+                        echo "<td>";
+                            echo "<input type='hidden' name='libelle[$i][tarif]' value='" . $cat->TARIF . "' />";
+                            echo $cat->TARIF . " €";
+                        echo "</td>";
                         echo "<td>";
                             echo "<input type='number' name='libelle[$i][qte]' min='0' pattern='[0-9]+' />";
                         echo "</td>";
                     echo "</tr>";
                     $i++;
-            }
-        ?>
-    </table>
-    <br>
+                }
+                ?>
+            </tbody>
+        </table>
         <input type="submit" value="Valider panier" class="btn btn-danger mt-2" name="bouton">
     </form>
 </div>  

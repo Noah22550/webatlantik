@@ -1,3 +1,4 @@
+<?php $session = session(); ?>
 <div class="row justify-content">
     <div class="col-md-3">
         <div class="card shadow p-3 mb-5 bg-body rounded">
@@ -60,6 +61,8 @@
                                     echo "<td value='" . $uneTraversee->Numero . "'>" .anchor('reserve/'.$uneTraversee->Numero, $uneTraversee->Numero) . "</td>";
                                     echo "<td>" . $uneTraversee->heure . "</td>";
                                     echo "<td>" . $uneTraversee->NOM . "</td>";
+                                    $session->set('noliaison', $uneTraversee->NOLIAISON);
+                                    $session->set('dateDepart', $uneTraversee->dateDepart);
                                     foreach ($resultat as $uneReserve) {
                                         foreach ($lescatégories as $categorie) {
                                             If ($uneReserve->NOTRAVERSEE == $uneTraversee->Numero) {

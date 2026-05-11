@@ -38,62 +38,56 @@
 
 
 
-        public function modifcompte($noclient)
+        public function modifcompte()
         {
-            //$session = session();
-            $data['TitreDeLaPage'] = 'Modifier mon compte';
-            $modelclient = new ModeleClients();
-            $mel = $modelclient->find($noclient);
-            $session = session();
-            //$session->set('mel', $utilisateurRetourne->MEL);
-
-            if(!$mel) {
-                throw new \CodeIgniter\Exceptions\PageNotFoundException('Client non trouvé');
-            }
-            if (!$this->request->is('post')) {
-                
-                return view('Templates/Header')
-                    . view('clients/vue_modifiercompte', $data)
-                    . view('Templates/Footer');
-            }
-
-            $reglesValidation = [
-                'txtnom' => 'required|string|max_length[30]',
-                'txtprenom' => 'required|string|max_length[30]',
-                'txtadresse' => 'required|string|max_length[100]',
-                'txtcodepostal' => 'required|numeric',
-                'txtville' => 'required|string|max_length[50]',
-                'txttelephonefixe' => 'required|numeric|max_length[15]',
-                'txttelephonemobile' => 'numeric|max_length[15]',
-                'txtmel' => 'required|valid_email',
-                'txtmotdepasse' => 'required|string|min_length[5]',
-            ];
-            if (!$this->validate($reglesValidation)) {
-                $data['TitreDeLaPage'] = "Saisie client incorrecte";
-                $data['client'] = $modelclient->getclient('noclient');
-                return view('Templates/Header')
-                    . view('clients/vue_modifiercompte', $data)
-                    . view('Templates/Footer');
-            }
-
-            $donneesAInserer = [
-                'nom' => $this->request->getPost('txtnom'),
-                'prenom' => $this->request->getPost('txtprenom'),
-                'adresse' => $this->request->getPost('txtadresse'),
-                'codepostal' => $this->request->getPost('txtcodepostal'),
-                'ville' => $this->request->getPost('txtville'),
-                'mel' => $this->request->getPost('txtmel'),
-                'telephonefixe' => $this->request->getPost('txttelephonefixe'),
-                'telephonemobile' => $this->request->getPost('txttelephonemobile'),
-                'motdepasse' => $this->request->getPost('txtmotdepasse'),
-            ];
-            $noclient = $donneesAInserer['noclient'] ;
-            $modelclient->update($noclient, $donneesAInserer); 
-            $donnees['clientAjoute'] = true;
+        $session = session();
+        $data['TitreDeLaPage'] = 'Modifer vos informations';
+        if (!$this->request->is('post')) {
             return view('Templates/Header')
-                . view('utilisateur/vue_RapportModif', $donnees)
-                . view('Templates/Footer');
+            . view('Clients/vue_modifiercompte', $data)
+            . view('Templates/Footer');
         }
+        $reglesValidation = [
+            'txtNom' => 'permit_empty|string|max_length[60]',
+            'txtPrenom' => 'permit_empty|string|max_length[60]',
+            'txtAdresse' => 'permit_empty|string|max_length[128]',
+            'txtCodepostal' => 'permit_empty|integer|max_length[11]',
+            'txtVille' => 'permit_empty|string|max_length[80]',
+            'txtTelfixe' => 'permit_empty|string|max_length[16]',
+            'txtTelportable' => 'permit_empty|string|max_length[16]',
+            'txtMel' => 'permit_empty|string|max_length[80]',
+            'txtMotDePasse' => 'permit_empty|string|min_length[2]',
+        ];
+        if (!$this->validate($reglesValidation)) {
+
+            $data['TitreDeLaPage'] = "Saisie incorrecte";
+            return view('Templates/Header')
+            . view('Clients/vue_modifiercompte', $data)
+            . view('Templates/Footer');
+        }
+
+        $donneesAModifier = array(
+            'NOM' => $this->request->getPost('txtNom'),
+            'PRENOM' => $this->request->getPost('txtPrenom'),
+            'ADRESSE' => $this->request->getPost('txtAdresse'),
+            'CODEPOSTAL' => $this->request->getPost('txtCodepostal'),
+            'VILLE' => $this->request->getPost('txtVille'),
+            'TELEPHONEFIXE' => $this->request->getPost('txtTelfixe'),
+            'TELEPHONEMOBILE' => $this->request->getPost('txtTelportable'),
+            'MEL' => $this->request->getPost('txtMel'),
+            'MOTDEPASSE' => $this->request->getPost('txtMotDePasse'),
+        ); 
+        $modClient = new ModeleClients();
+        $condition = ['NOCLIENT'=>$session->get('noclient')];
+        $donnees['clientAModifier'] = $modClient->where('NOCLIENT', $condition)->update($condition,$donneesAModifier, false);
+
+        return view('Templates/Header')
+            .view('utilisateur/vue_RapportAjout', $donnees)
+            .view('Templates/Footer');
+        }
+
+
+         
         public function affichertraverse()
         {
             $modSec = new ModeleHoraire();
@@ -120,7 +114,7 @@
             foreach ($data['lescatégories'] as $categorie) {
                 foreach ($data['traversees'] as $uneTraversee) {
 
-                    $capamaxResult    = $modSec->getCapaciteMaximale();
+                    $capamaxResult = $modSec->getCapaciteMaximale();
                     $enregistreeResult = $modSec->getQuantiteEnregistree();
 
                     // Chercher la bonne ligne dans les résultats
@@ -141,9 +135,9 @@
                         }
                         $data['resultat'][] = (object)[
                             'LETTRECATEGORIE' => $categorie->LETTRECATEGORIE,
-                            'NOTRAVERSEE'     => $uneTraversee->Numero,
-                            'NOLIAISON'       => $uneTraversee->NOLIAISON,
-                            'quantite'        => $capamax - $enregistree,
+                            'NOTRAVERSEE'=> $uneTraversee->Numero,
+                            'NOLIAISON'=> $uneTraversee->NOLIAISON,
+                            'quantite' => $capamax - $enregistree,
                         ];
                     }
                 }
@@ -153,14 +147,15 @@
         }
         public function reserve($notraversee)
         {
+                $session = session();
                 $modeTarif = new ModeleTarif();
                 $modeclient = new ModeleClients();
                 $modeliaisons = new ModeleLiaisons();
-                $liaisonResult = $modeTarif->gettarifdeliaison($notraversee);
-                $noliaisonId = $liaisonResult[0]->NOLIAISON; 
                 $data['client'] = $modeclient->findall();
+                $noliaison = $_SESSION['noliaison'];
+                $datedepart = $_SESSION['dateDepart'];
                 $data['entete'] = $modeliaisons->getenteteprtarif($notraversee);
-                $data['libelle'] = $modeTarif->getTarif($notraversee, $noliaisonId);
+                $data['libelle'] = $modeTarif->getTarif($noliaison, $datedepart);
                 return view('Templates/Header', $data)
                     . view('clients/vue_reserve', $data)
                     . view('Templates/Footer');

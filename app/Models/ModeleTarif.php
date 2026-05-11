@@ -49,27 +49,20 @@
                 ->get()
                 ->getResult();
         }
-        public function gettarifdeliaison($noliaison)
+        public function getTarif($noliaison, $datedepart)
         {
-            return $this->select('TARIF, NOPERIODE, NOTYPE, LETTRECATEGORIE, NOLIAISON')
-                ->where('NOLIAISON', $noliaison)
-                ->get()
-                ->getResult();
-        }
-        public function getTarif($notraversee, $noliaison)
-        {
-            return $this->select('tr.NOTRAVERSEE as notraversee, tarifer.TARIF, typ.libelle as libcat, typ.NOTYPE, typ.LETTRECATEGORIE as lettre, tr.NOLIAISON, tr.NOTRAVERSEE, per.DATEDEBUT, per.DATEFIN, tr.DATEHEUREDEPART')
-                ->from('tarifer tarifer')
-                ->join('type typ', 'typ.NOTYPE = tarifer.NOTYPE', 'inner')
-                ->join('traversee tr', 'tr.NOLIAISON = tarifer.NOLIAISON', 'inner')
-                ->join('periode per', 'per.NOPERIODE = tarifer.NOPERIODE', 'inner')
-                ->where('tr.NOTRAVERSEE', $notraversee)
-                ->where('tr.NOLIAISON', $noliaison)
-                ->where('date(tr.DATEHEUREDEPART) >= per.DATEDEBUT AND  date(tr.DATEHEUREDEPART) <= per.DATEFIN ')
-                ->groupby('typ.LETTRECATEGORIE')
-                ->groupby('typ.NOTYPE')
-                ->get()
-                ->getResult();
+        return $this->select('typ.NOTYPE, typ.LIBELLE as libcat, typ.LETTRECATEGORIE as lettre, tarifer.TARIF')
+        ->from('tarifer tarifer')
+        ->join('type typ', 'typ.NOTYPE = tarifer.NOTYPE AND typ.LETTRECATEGORIE = tarifer.LETTRECATEGORIE', 'inner')
+        ->join('periode per', 'per.NOPERIODE = tarifer.NOPERIODE', 'inner')
+        ->where('tarifer.NOLIAISON', $noliaison)
+        ->where('per.DATEDEBUT <=', $datedepart)
+        ->where('per.DATEFIN >=', $datedepart)
+        ->groupby('typ.LETTRECATEGORIE, typ.LIBELLE')
+        ->orderBy('typ.LETTRECATEGORIE')
+        ->orderBy('typ.NOTYPE')
+        ->get()
+        ->getResult();
         }
     }
 ?>
