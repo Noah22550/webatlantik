@@ -165,5 +165,12 @@
                     . view('clients/vue_reserve', $data)
                     . view('Templates/Footer');
         }
+        public function traitementPanier()
+        {
+            $data['TitreDeLaPage'] = 'Horaires des traversées';
+             return view('Templates/Header', $data)
+                    . view('clients/vue_traitementPanier', $data)
+                    . view('Templates/Footer');
+        }
     }
 ?>

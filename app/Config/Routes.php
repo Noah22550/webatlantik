@@ -22,3 +22,4 @@ $routes->match(['get', 'post'],'traversetab/(:num)/(:num)', 'clients::traverseta
 // Route POST pour le formulaire
 $routes->post('traversetab/(:num)', 'clients::traversetab/$1');
 $routes->match(['get', 'post'], 'reserve/(:num)', 'clients::reserve/$1');
+$routes->match(['get', 'post'], 'traitementPanier', 'clients::traitementPanier');

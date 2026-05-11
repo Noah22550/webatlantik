@@ -66,8 +66,8 @@
                 ->where('tr.NOTRAVERSEE', $notraversee)
                 ->where('tr.NOLIAISON', $noliaison)
                 ->where('date(tr.DATEHEUREDEPART) >= per.DATEDEBUT AND  date(tr.DATEHEUREDEPART) <= per.DATEFIN ')
-                ->groupby('typ.libelle')
-                ->orderby('typ.LETTRECATEGORIE', 'ASC')
+                ->groupby('typ.LETTRECATEGORIE')
+                ->groupby('typ.NOTYPE')
                 ->get()
                 ->getResult();
         }

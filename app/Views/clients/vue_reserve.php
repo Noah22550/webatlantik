@@ -56,7 +56,7 @@
                                 echo $cat->TARIF . " €";
                             echo "</td>";
                         echo "<td>";
-                            echo "<input type='number' name='libelle[$i][qte]' min='0' />";
+                            echo "<input type='number' name='libelle[$i][qte]' min='0' pattern='[0-9]+' />";
                         echo "</td>";
                     echo "</tr>";
                     $i++;
@@ -64,7 +64,7 @@
         ?>
     </table>
     <br>
-        <input type="submit" value="Valider panier">
+        <input type="submit" value="Valider panier" class="btn btn-danger mt-2" name="bouton">
     </form>
 </div>  
 </body>
