@@ -34,7 +34,7 @@
 </div>
 <div class="col-md-5">
     <h4>Reservation</h4>
-    <form action='traitementPanier' method='post'>
+    <form method='post'>
         <table class="table table-bordered">
             <thead class="table-dark">
                 <tr>
@@ -67,7 +67,9 @@
                 ?>
             </tbody>
         </table>
-        <input type="submit" value="Valider panier" class="btn btn-danger mt-2" name="bouton">
+        <button type="submit" value="Valider panier" class="btn btn-danger mt-2" name="bouton" href="<?php echo site_url('traitementPanier') ?>">
+            Valider panier
+        </button>
     </form>
 </div>  
 </body>
