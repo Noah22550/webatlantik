@@ -117,6 +117,5 @@
                     . view('clients/vue_traversetab', $data)
                     . view('Templates/Footer');
         }
-        
     }
 ?>
