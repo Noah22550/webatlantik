@@ -6,6 +6,7 @@
     use App\Models\ModeleClients;
     use App\Models\ModeleHoraire;
     use App\Models\modelecategorie;
+    use App\Models\modeleReserv;
 
     class clients extends BaseController
     {
@@ -110,13 +111,10 @@
             $data['lesperiodes'] = $modperiode->getperiode();
             $data['traversees']  = $modSec->getLesTraverseesBateaux();
             $data['resultat'] = [];
-
             foreach ($data['lescatégories'] as $categorie) {
                 foreach ($data['traversees'] as $uneTraversee) {
-
                     $capamaxResult = $modSec->getCapaciteMaximale();
                     $enregistreeResult = $modSec->getQuantiteEnregistree();
-
                     // Chercher la bonne ligne dans les résultats
                     $capamax = 0;
                     foreach ($capamaxResult as $res) {
@@ -125,7 +123,6 @@
                             break;
                         }
                     }
-
                         $enregistree = 0;
                         foreach ($enregistreeResult as $res2) {
                             if ($res2->LETTRECATEGORIE == $categorie->LETTRECATEGORIE && $res2->NOTRAVERSEE == $uneTraversee->Numero) {
@@ -151,11 +148,31 @@
                 $modeTarif = new ModeleTarif();
                 $modeclient = new ModeleClients();
                 $modeliaisons = new ModeleLiaisons();
+                $moderesa = new modeleReserv();
+                $data['notraversee'] = $notraversee;
                 $data['client'] = $modeclient->findall();
                 $noliaison = $_SESSION['noliaison'];
                 $datedepart = $_SESSION['dateDepart'];
+                $session->set('notraversee', $notraversee);
                 $data['entete'] = $modeliaisons->getenteteprtarif($notraversee);
                 $data['libelle'] = $modeTarif->getTarif($noliaison, $datedepart);
+               if ($this->request->is('post')) {
+                $total = 0;
+                foreach ($this->request->getPost('libelle') as $ligne) {
+                        $tarif = (float)$ligne['tarif'];
+                        $qte   = (int)$ligne['qte'];
+                        $total += $tarif * $qte;
+                }
+                $donneesAInserer = array(
+                'NOTRAVERSEE'=> $session->get('notraversee'),
+                'NOCLIENT'=> $session->get('noclient'),
+                'DATEHEURE'=> date('Y-m-d H:i:s'),
+                'MONTANTTOTAL'=> $total,
+                'PAYE' => 0,
+                'MODEREGLEMENT' => null,
+                ); 
+                $moderesa->insert($donneesAInserer, false);
+                }
                 return view('Templates/Header', $data)
                     . view('clients/vue_reserve', $data)
                     . view('Templates/Footer');
