@@ -18,3 +18,7 @@ $routes->get('liaisontarif/(:num)', 'clients::liaisontarif/$1');
 $routes->match(['get', 'post'], 'modifiercompte', 'clients::modifcompte');
 $routes->get('affichertraverse', 'clients::affichertraverse');
 $routes->get('traversetab/(:num)', 'clients::traversetab/$1');
+$routes->match(['get', 'post'],'traversetab/(:num)/(:num)', 'clients::traversetab/$1/$2');
+$routes->post('traversetab/(:alphanum)', 'clients::traversetab/$1');
+$routes->match(['get', 'post'], 'reserve/(:num)', 'clients::reserve/$1', ['filter' => 'client']);
+$routes->match(['get', 'post'], 'traitementPanier', 'clients::traitementPanier');

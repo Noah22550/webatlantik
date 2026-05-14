@@ -94,7 +94,8 @@ class visiteur extends BaseController
         if ($utilisateurRetourne != null) {
             /* mel et mot de passe OK : mel et profil sont stockés en session */
             $session->set('mel', $utilisateurRetourne->MEL);
-            //$session->set('profil', $utilisateurRetourne->profil);
+            $session->set('nom', $utilisateurRetourne->NOM);
+            $session->set('noclient', $utilisateurRetourne->NOCLIENT);
             // profil = "SuperAdministrateur ou "Administrateur"
             $data['mel'] = $mel;
             echo view('Templates/Header', $data);

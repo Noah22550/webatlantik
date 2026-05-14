@@ -1,8 +1,9 @@
+<?php $session = session(); ?>
 <div class="row justify-content">
-        <div class="col-md-3">
-            <div class="card shadow p-3 mb-5 bg-body rounded">
-                <div class="card-body">
-                    <h3 class="card-title">Horaires des traversées</h3>
+    <div class="col-md-3">
+        <div class="card shadow p-3 mb-5 bg-body rounded">
+            <div class="card-body">
+                <h3 class="card-title">Secteurs</h3>
                 <?php foreach ($nomsecteur as $unSecteur) {
                     echo '<h3 class="link-danger link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">'.anchor('traversetab/'.$unSecteur->NOSECTEUR, $unSecteur->NOM).'</h3>';
                 }
@@ -10,65 +11,74 @@
             </div>
         </div>
     </div>
-    <!-- Card 2 : Formulaire créneau -->
+
+    <!-- Card 2 : créneau -->
     <div class="col-md-4">
-        <div class="card shadow p-7 mb-8 bg-body rounded">
+        <div class="card shadow p-10 mb-12">
             <div class="card-body">
                 <h3 class="card-title">Horaires des traversées</h3>
                 Choisissez votre créneau :
                 <br>
-                    <select name="jour" class="form-select mb-2">
-                        <option value="laison"><?php 
+                <form method="post">
+                    <select name="liaison" class="form-select mb-2">
+                        <?php 
                         foreach ($uneliaison as $uneLiaison) {
-                            echo $uneLiaison->portdepart.' -> '.$uneLiaison->portarrivee;
+                            echo "<option value='".$uneLiaison->NOLIAISON."'>".$uneLiaison->portdepart.' -> '.$uneLiaison->portarrivee."</option>";
                         }
-                        ?></option>
+                        ?>
                     </select>
-                    <select name="partie_de_la_journee" class="form-select mb-1">
-                        <option value="periode">
-                            <?php 
-                                foreach ($lesperiodes as $uneperiode) {
-                                echo $uneperiode->DATEDEBUT.' -> '.$uneperiode->DATEFIN;
-                                }
-                            ?>
-                        </option>
-                    </select>
+                    <input type="date" name="periode" class="form-control mb-2">
                     <input type="submit" value="Valider" class="btn btn-danger mt-2" name="bouton">
+                </form>
             </div>
         </div>
-        <!-- tableau : Affichage des résulstats -->
-            <div class="container">
-               <!--  if !isset submit -->
-      <h2>Traversée</h2>
-      <table class="table">
-        <thead>
-          <tr>
-            <th>N°</th>
-            <th>Heure</th>
-            <th>Bateau</th>
-            <?php foreach ($lescatégories as $categorie)
-            {
-                echo "<th>". $categorie->LETTRECATEGORIE.' '.$categorie->LIBELLE. "</th>";
-            }?>
-          </tr>
-        </thead>
-        <tbody>
-          
-        <?php if (empty($traversees)) : ?>
-        <tr>
-            <td colspan="5">Aucune traversée disponible pour cette date.</td>
-        </tr>
-        <?php else : ?>
-        <?php foreach ($traversees as $uneTraversee) : ?>
-            <tr>
-                <td><?= $uneTraversee->NOTRAVERSEE ?></td>
-                <td><?= $uneTraversee->HEURE ?></td>
-                <td><?= $uneTraversee->NOM ?></td>
-            </tr>
-        <?php endforeach; ?>
-        <?php endif; ?>
-        </tbody>
-      </table>
     </div>
+
+    <!-- Col 3 : tableau -->
+    <div class="col-md-5">
+        <div class="container">
+            <h3>Traversée</h3>
+            <table class="table">
+                <thead class="table-dark">
+                    <tr>
+                        <th>N°</th>
+                        <th>Heure</th>
+                        <th>Bateau</th>
+                        <?php foreach ($lescatégories as $categorie) {
+                            echo "<th value='". $categorie->LETTRECATEGORIE."'>". $categorie->LETTRECATEGORIE.' '.$categorie->LIBELLE. "</th>";
+                        }?>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php if (!isset($_POST['bouton'])) {
+                        echo '<tr>
+                            <td colspan="5">Veuillez choisir une liaison et une date.</td>
+                        </tr>';
+                    } else {
+                        foreach ($traversees as $uneTraversee) {
+                            if ($_POST['liaison'] == $uneTraversee->NOLIAISON && $_POST['periode']) {
+                                echo "<tr>";
+                                    echo "<td value='" . $uneTraversee->Numero . "'>" .anchor('reserve/'.$uneTraversee->Numero, $uneTraversee->Numero) . "</td>";
+                                    echo "<td>" . $uneTraversee->heure . "</td>";
+                                    echo "<td>" . $uneTraversee->NOM . "</td>";
+                                    $session->set('noliaison', $uneTraversee->NOLIAISON);
+                                    $session->set('dateDepart', $uneTraversee->dateDepart);
+                                    foreach ($resultat as $uneReserve) {
+                                        foreach ($lescatégories as $categorie) {
+                                            If ($uneReserve->NOTRAVERSEE == $uneTraversee->Numero) {
+                                                if ($uneReserve->LETTRECATEGORIE == $categorie->LETTRECATEGORIE) {
+                                                    echo "<td>" . $uneReserve->quantite . "</td>";
+                                                }
+                                            }
+                                        }
+                                    }
+                                echo "</tr>";
+                            }
+                        }
+                    }
+                    ?>
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>

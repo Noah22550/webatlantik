@@ -1,74 +1,46 @@
 <h2 class="text-center my-4"><?= $TitreDeLaPage ?></h2>
-
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-6">
-
             <div class="card shadow p-4">
-                
+               <h2><?php echo $TitreDeLaPage ?></h2>
                 <?php
-                if ($TitreDeLaPage == 'Saisie produit incorrecte') {
-                    echo '<div class="alert alert-danger">';
+                if ($TitreDeLaPage=='Saisie incorrecte')
                     echo service('validation')->listErrors();
-                    echo '</div>';
-                }
+                    /* set_value : en cas de non validation, les données déjà saisies sont réinjectées dans le formulaire */
+                    echo form_open('modifiercompte');
+                    echo csrf_field();
+                    
+                    echo form_label('Nom : ','txtNom');
+                    echo form_input('txtNom', set_value('txtNom')), '</br>', '</br>';
 
-                echo form_open('inscription');
-                echo csrf_field();
+                    echo form_label('Prenom : ','txtPrenom');
+                    echo form_input('txtPrenom', set_value('txtPrenom')), '</br>', '</br>';
+
+                    echo form_label('Adresse : ','txtAdresse');
+                    echo form_input('txtAdresse', set_value('txtAdresse')), '</br>', '</br>';
+
+                    echo form_label('Code Postal : ','txtCodepostal');
+                    echo form_input('txtCodepostal', set_value('txtCodepostal')), '</br>', '</br>';
+
+                    echo form_label('Ville : ','txtVille');
+                    echo form_input('txtVille', set_value('txtVille')), '</br>', '</br>';
+
+                    echo form_label('Telephone fixe : ','txtTelfixe');
+                    echo form_input('txtTelfixe', set_value('txtTelfixe')), '</br>', '</br>';
+
+                    echo form_label('Telephone portable : ','txtTelportable');
+                    echo form_input('txtTelportable', set_value('txtTelportable')), '</br>', '</br>';
+
+                    echo form_label('Adresse mel : ','txtMel');
+                    echo form_input('txtMel', set_value('txtMel')), '</br>', '</br>';
+                    
+                    echo form_label('Mot de passe : ','txtMotDePasse');
+                    echo form_input('txtMotDePasse', set_value('txtMotDePasse')), '</br>', '</br>';    
+                    
+                    echo form_submit('submit', 'Modifier les informations du compte');
+                    echo form_close();
                 ?>
-
-                <div class="mb-3">
-                    <label class="form-label">Nom</label>
-                    <input type="text" name="txtnom" class="form-control" value="<?= set_value('txtnom'); ?>">
-                </div>
-
-                <div class="mb-3">
-                    <label class="form-label">Prénom</label>
-                    <input type="text" name="txtprenom" class="form-control" value="<?= set_value('txtprenom'); ?>">
-                </div>
-
-                <div class="mb-3">
-                    <label class="form-label">Adresse</label>
-                    <input type="text" name="txtadresse" class="form-control" value="<?= set_value('txtadresse'); ?>">
-                </div>
-
-                <div class="mb-3">
-                    <label class="form-label">Code postal</label>
-                    <input type="text" name="txtcodepostal" class="form-control" value="<?= set_value('txtcodepostal'); ?>">
-                </div>
-
-                <div class="mb-3">
-                    <label class="form-label">Ville</label>
-                    <input type="text" name="txtville" class="form-control" value="<?= set_value('txtville'); ?>">
-                </div>
-
-                <div class="mb-3">
-                    <label class="form-label">Email</label>
-                    <input type="email" name="txtmel" class="form-control" value="<?= set_value('txtmel'); ?>">
-                </div>
-
-                <div class="mb-3">
-                    <label class="form-label">Téléphone fixe</label>
-                    <input type="text" name="txttelephonefixe" class="form-control" value="<?= set_value('txttelephonefixe'); ?>">
-                </div>
-
-                <div class="mb-3">
-                    <label class="form-label">Téléphone mobile</label>
-                    <input type="text" name="txttelephonemobile" class="form-control" value="<?= set_value('txttelephonemobile'); ?>">
-                </div>
-
-                <div class="mb-3">
-                    <label class="form-label">Mot de passe</label>
-                    <input type="password" name="txtmotdepasse" class="form-control">
-                </div>
-
-                <div class="d-grid">
-                    <button type="submit" class="btn btn-primary">
-                        S'inscrire
-                    </button>
-                </div>
-
-                <?= form_close(); ?>
             </div>
         </div>
     </div>

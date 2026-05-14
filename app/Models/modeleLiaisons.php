@@ -10,7 +10,7 @@
         protected $returnType = 'object'; // résultats retournés sous forme d'objet(s)
         protected $allowedFields = ['noport_depart', 'nosecteur','noport_arrivee', 'distance'];
     
-       public function getentete($numliaison, $portarrive, $portdepart){
+       public function getentete($numliaison){
             return $this->select("l.NOLIAISON AS codeliaison, portd.NOM AS portdépart, porta.NOM AS portarrivé")
                     ->from('liaison l')
                     ->join('port porta', 'porta.NOPORT = l.NOPORT_ARRIVEE')
@@ -28,25 +28,38 @@
                     ->get()
                     ->getResult();
         }
-        public function getport($noliaison){
-            return $this->select('p.NOM as portdepart, po.NOM as portarrivee')
+        public function getport($Nosecteur){
+            return $this->select('l.NOLIAISON, p.NOM as portdepart, po.NOM as portarrivee')
                 ->from('liaison l')
                 ->join('port p', 'p.NOPORT = l.NOPORT_DEPART')
                 ->join('port po', 'po.NOPORT = l.NOPORT_ARRIVEE')
+                ->where('l.NOSECTEUR', $Nosecteur)
                 ->groupby('p.NOM, po.NOM')
-                ->where('l.NOLIAISON', $noliaison)
                 ->get()
                 ->getResult();
         }
-        public function getperiode($noliaison){
-            return $this->select('p.DATEDEBUT, p.DATEFIN')
-                ->join('periode p', 'p.NOPERIODE = liaison.NOLIAISON')
-                ->where('liaison.NOLIAISON', $noliaison)
-                ->groupby('p.DATEDEBUT, p.DATEFIN')
+        public function getperiode(){
+            return $this->select('date(DATEHEUREDEPART) as dates')
+                ->from('traversee t ')
+                ->groupby('dates')
                 ->get()
                 ->getResult();
         }
-
-
-    }
+    public function getenteteprtarif($notraversee){
+    return $this->select("l.NOLIAISON AS codeliaison, 
+                          portd.NOM AS portdépart, 
+                          porta.NOM AS portarrivé, 
+                          t.NOTRAVERSEE AS notraversee, 
+                          ty.LETTRECATEGORIE AS lettre")
+                ->from('liaison l')
+                ->join('port porta', 'porta.NOPORT = l.NOPORT_ARRIVEE')
+                ->join('port portd', 'portd.NOPORT = l.NOPORT_DEPART')
+                ->join('traversee t', 't.NOLIAISON = l.NOLIAISON')
+                ->join('type ty', 'ty.NOTYPE = ty.NOTYPE', 'inner')
+                ->where('t.NOTRAVERSEE', $notraversee)
+                ->groupBy('l.NOLIAISON, portd.NOM, porta.NOM, t.NOTRAVERSEE')
+                ->get()
+                ->getResult();
+            }
+        }
 ?>

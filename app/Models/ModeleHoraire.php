@@ -10,27 +10,40 @@
         protected $returnType = 'object'; // résultats retournés sous forme d'objet(s)
         protected $allowedFields = ['NOM']; 
 
-         public function getQuantiteEnregistree($noTraversee, $lettreCategorie)
+         public function getQuantiteEnregistree()
         {
-            return $this->select('SUM(e.QUANTITERESERVEE) as quantite')
+            return $this->select('e.QUANTITERESERVEE as quantite, r.NOTRAVERSEE, e.LETTRECATEGORIE')
                 ->from('reservation r')
                 ->join('enregistrer e', 'r.NORESERVATION = e.NORESERVATION')
-                ->where('r.NOTRAVERSEE', $noTraversee)
-                ->where(' e.LETTRECATEGORIE', $lettreCategorie)
+                ->join('type ty', 'ty.NOTYPE = ty.NOTYPE', 'inner')
+                //->where('r.NOTRAVERSEE', $noTraversee)
+                //->where(' e.LETTRECATEGORIE', $lettreCategorie)
                 ->get()
                 ->getResult();
             }
-        public function getLesTraverseesBateaux($noLiaison, $dateTraversee)
+                
+           public function getCapaciteMaximale(){
+                return $this->select('c.CAPACITEMAX, c.LETTRECATEGORIE, b.NOBATEAU')
+                    ->from('traversee t')
+                    -> join('bateau b', 'b.NOBATEAU = t.NOBATEAU', 'inner')
+                    -> join('contenir c', 'c.NOBATEAU = b.NOBATEAU', 'inner')
+                    ->groupby('c.LETTRECATEGORIE, b.NOBATEAU')
+                    //->where('t.NOTRAVERSEE', $noTraversee)
+                    //->where('c.LETTRECATEGORIE', $lettreCategorie)
+                    ->get()
+                    ->getResult();
+            }
+        
+        public function getLesTraverseesBateaux()
         {
-            return $this->select('t.NOTRAVERSEE,TIME(t.DATEHEUREDEPART) AS HEURE, b.NOM')
-                ->from('liaison l')
-                ->join('traversee t', 'l.NOLIAISON = t.NOLIAISON')
-                ->join('bateau b', 't.NOBATEAU = b.NOBATEAU')
-                ->where('t.NOLIAISON', $noLiaison)
-                ->where('DATE(t.DATEHEUREDEPART)', $dateTraversee)
+            return $this->select('NOLIAISON, t.NOTRAVERSEE as Numero, TIME(DATEHEUREDEPART) As heure, b.NOM, b.NOBATEAU, date(t.DATEHEUREDEPART) as dateDepart')
+                ->from('traversee t')
+                ->join('bateau b', 'b.NOBATEAU = t.NOBATEAU', 'inner')
+                ->groupby('t.NOTRAVERSEE')
                 ->get()
                 ->getResult();
         }
+        
     }
    
 ?>
