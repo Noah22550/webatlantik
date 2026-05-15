@@ -21,4 +21,4 @@ $routes->get('traversetab/(:num)', 'clients::traversetab/$1');
 $routes->match(['get', 'post'],'traversetab/(:num)/(:num)', 'clients::traversetab/$1/$2');
 $routes->post('traversetab/(:alphanum)', 'clients::traversetab/$1');
 $routes->match(['get', 'post'], 'reserve/(:num)', 'clients::reserve/$1', ['filter' => 'client']);
-$routes->match(['get', 'post'], 'traitementPanier', 'clients::traitementPanier');
+$routes->match(['get', 'post'], 'traitementPanier', 'clients::traitementPanier', ['filter' => 'client']);

@@ -196,7 +196,17 @@
         }
         public function traitementPanier()
         {
-            $data['TitreDeLaPage'] = 'Horaires des traversées';
+            $session = session();
+            $modeTarif = new ModeleTarif();
+            $modeclient = new ModeleClients();
+            $modeliaisons = new ModeleLiaisons();
+            $moderesa = new modeleReserv();
+            $modEnr = new ModeleEnregistrer();
+            $data['client'] = $modeclient->findall();
+            //$session->set('notraversee', $notraversee);
+            $liaison = $_SESSION['noliaison'];
+            $data['entete'] = $modeliaisons->getenteteprtarif($liaison);
+            $data['TitreDeLaPage'] = 'Votre réservation';
              return view('Templates/Header', $data)
                     . view('clients/vue_traitementPanier', $data)
                     . view('Templates/Footer');
