@@ -7,6 +7,7 @@
     use App\Models\ModeleHoraire;
     use App\Models\modelecategorie;
     use App\Models\modeleReserv;
+    use App\Models\ModeleEnregistrer;
 
     class clients extends BaseController
     {
@@ -25,12 +26,12 @@
         {
         $modeletarif = new modeleTarif();
 
-            $data['noliaison']  = $noliaison;
-            $data['categories'] = $modeletarif->getcategorie();
-            $data['types']      = $modeletarif->getype();
-            $data['periodes']   = $modeletarif->getperiode();
-            $data['tarifs']     = $modeletarif->getAllTarifs($noliaison);
-            $data['nomsports']  = $modeletarif->getnomport($noliaison);
+            $data['noliaison'] = $noliaison;
+            $data['categories']= $modeletarif->getcategorie();
+            $data['types'] = $modeletarif->getype();
+            $data['periodes'] = $modeletarif->getperiode();
+            $data['tarifs'] = $modeletarif->getAllTarifs($noliaison);
+            $data['nomsports'] = $modeletarif->getnomport($noliaison);
             $data['TitreDeLaPage'] = 'Tarifs de la liaison ' . $noliaison;
             return view('Templates/Header', $data)
                 . view('clients/vue_liaisontarif', $data)
@@ -149,6 +150,7 @@
                 $modeclient = new ModeleClients();
                 $modeliaisons = new ModeleLiaisons();
                 $moderesa = new modeleReserv();
+                $modEnr = new ModeleEnregistrer();
                 $data['notraversee'] = $notraversee;
                 $data['client'] = $modeclient->findall();
                 $noliaison = $_SESSION['noliaison'];
@@ -174,6 +176,19 @@
                         'MODEREGLEMENT'=> null,
                     ];
                     $moderesa->insert($donneesAInserer, false);
+                   $noreservation = $moderesa->getInsertID(); 
+                    foreach ($this->request->getPost('libelle') as $ligne) {
+                        if ($ligne['qte'] != "") { 
+                            $donneesEnr = [
+                                'NORESERVATION' => (int) $noreservation,
+                                'LETTRECATEGORIE' => $ligne['lettrecategorie'],
+                                'NOTYPE'  => (int) $ligne['notype'],
+                                'QUANTITERESERVEE'  => (int) $ligne['qte'],
+                                'QUANTITEEMBARQUEE' => 0,
+                            ];
+                            $modEnr->insert($donneesEnr, false);
+                        }
+                    }
                 }
                 return view('Templates/Header', $data)
                     . view('clients/vue_reserve', $data)
