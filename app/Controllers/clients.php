@@ -189,6 +189,10 @@
                             $modEnr->insert($donneesEnr, false);
                         }
                     }
+                    $session->set('noreservation', $noreservation);
+                    $session->set('montanttotal', $total);
+                    $session->set('lignes', $this->request->getPost('libelle'));
+                    return redirect()->to(site_url('traitementPanier'));
                 }
                 return view('Templates/Header', $data)
                     . view('clients/vue_reserve', $data)
@@ -197,16 +201,15 @@
         public function traitementPanier()
         {
             $session = session();
-            $modeTarif = new ModeleTarif();
-            $modeclient = new ModeleClients();
+            $modeclient   = new ModeleClients();
             $modeliaisons = new ModeleLiaisons();
-            $moderesa = new modeleReserv();
-            $modEnr = new ModeleEnregistrer();
-            $data['client'] = $modeclient->findall();
-            //$session->set('notraversee', $notraversee);
-            $liaison = $_SESSION['noliaison'];
-            $data['entete'] = $modeliaisons->getenteteprtarif($liaison);
+            $notraversee = $session->get('notraversee');
             $data['TitreDeLaPage'] = 'Votre réservation';
+            $data['client'] = $modeclient->findall();
+            $data['entete']= $modeliaisons->getenteteprtarif($notraversee);
+            $data['noreservation'] = $session->get('noreservation');
+            $data['montanttotal'] = $session->get('montanttotal');
+            $data['lignes'] = $session->get('lignes');
              return view('Templates/Header', $data)
                     . view('clients/vue_traitementPanier', $data)
                     . view('Templates/Footer');

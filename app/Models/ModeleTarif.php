@@ -59,8 +59,7 @@
         ->where('per.DATEDEBUT <=', $datedepart)
         ->where('per.DATEFIN >=', $datedepart)
         ->groupby('typ.LETTRECATEGORIE, typ.LIBELLE')
-        ->orderBy('typ.LETTRECATEGORIE')
-        ->orderBy('typ.NOTYPE')
+        ->orderBy('typ.LETTRECATEGORIE, typ.NOTYPE')
         ->get()
         ->getResult();
         }
