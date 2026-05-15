@@ -156,22 +156,24 @@
                 $session->set('notraversee', $notraversee);
                 $data['entete'] = $modeliaisons->getenteteprtarif($notraversee);
                 $data['libelle'] = $modeTarif->getTarif($noliaison, $datedepart);
-               if ($this->request->is('post')) {
-                $total = 0;
-                foreach ($this->request->getPost('libelle') as $ligne) {
-                        $tarif = (float)$ligne['tarif'];
-                        $qte   = (int)$ligne['qte'];
-                        $total += $tarif * $qte;
-                }
-                $donneesAInserer = array(
-                'NOTRAVERSEE'=> $session->get('notraversee'),
-                'NOCLIENT'=> $session->get('noclient'),
-                'DATEHEURE'=> date('Y-m-d H:i:s'),
-                'MONTANTTOTAL'=> $total,
-                'PAYE' => 0,
-                'MODEREGLEMENT' => null,
-                ); 
-                $moderesa->insert($donneesAInserer, false);
+                if ($this->request->is('post')) {
+                    $total = 0;
+                    foreach ($this->request->getPost('libelle') as $ligne) {
+                        if ($ligne['qte'] != "") {
+                            $tarif = (float) $ligne['tarif'];
+                            $qte   = (float) $ligne['qte'];
+                            $total += $tarif * $qte;
+                        }
+                    }
+                    $donneesAInserer = [
+                        'NOTRAVERSEE'=> (int) $notraversee,
+                        'NOCLIENT' => (int) $session->get('noclient'),
+                        'DATEHEURE' => date('Y-m-d H:i:s'),
+                        'MONTANTTOTAL'=> (float) $total,
+                        'PAYE'=> 0,
+                        'MODEREGLEMENT'=> null,
+                    ];
+                    $moderesa->insert($donneesAInserer, false);
                 }
                 return view('Templates/Header', $data)
                     . view('clients/vue_reserve', $data)
