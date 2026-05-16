@@ -176,7 +176,7 @@
                         'MODEREGLEMENT'=> null,
                     ];
                     $moderesa->insert($donneesAInserer, false);
-                   $noreservation = $moderesa->getInsertID(); 
+                    $noreservation = $moderesa->getInsertID(); 
                     foreach ($this->request->getPost('libelle') as $ligne) {
                         if ($ligne['qte'] != "") { 
                             $donneesEnr = [
@@ -192,26 +192,18 @@
                     $session->set('noreservation', $noreservation);
                     $session->set('montanttotal', $total);
                     $session->set('lignes', $this->request->getPost('libelle'));
-                    return redirect()->to(site_url('traitementPanier'));
+                    $data['lignes']  = $modEnr->getLignesReservation($noreservation);
+                    $data['noreservation'] = $noreservation;
+                    $data['montanttotal'] = $total;
+                    $data['client']  = $modeclient->find($session->get('noclient'));
+                    $data['TitreDeLaPage'] = 'Votre réservation';
+
+                    return view('Templates/Header', $data)
+                        . view('clients/vue_traitementPanier', $data)
+                        . view('Templates/Footer');
                 }
                 return view('Templates/Header', $data)
                     . view('clients/vue_reserve', $data)
-                    . view('Templates/Footer');
-        }
-        public function traitementPanier()
-        {
-            $session = session();
-            $modeclient   = new ModeleClients();
-            $modeliaisons = new ModeleLiaisons();
-            $notraversee = $session->get('notraversee');
-            $data['TitreDeLaPage'] = 'Votre réservation';
-            $data['client'] = $modeclient->findall();
-            $data['entete']= $modeliaisons->getenteteprtarif($notraversee);
-            $data['noreservation'] = $session->get('noreservation');
-            $data['montanttotal'] = $session->get('montanttotal');
-            $data['lignes'] = $session->get('lignes');
-             return view('Templates/Header', $data)
-                    . view('clients/vue_traitementPanier', $data)
                     . view('Templates/Footer');
         }
     }

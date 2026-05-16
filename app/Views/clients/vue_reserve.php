@@ -34,7 +34,7 @@
 </div>
 <div class="col-md-5">
     <h4>Reservation</h4>
-    <form method='post' action='<?= site_url('traitementPanier') ?>'>
+    <form method='post' action='<?= site_url('reserve/' . $notraversee) ?>'>
         <table class="table table-bordered">
             <thead class="table-dark">
                 <tr>
