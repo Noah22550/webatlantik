@@ -44,6 +44,9 @@
         ?>
     </div>
 </div>
+ <button type="submit" class="btn btn-info mt-4" name="paiement" value="1">
+            payer
+        </button>
 
 </center>
 </body>
