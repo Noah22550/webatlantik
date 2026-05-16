@@ -69,22 +69,20 @@
         }
 
         $donneesAModifier = array(
-            'NOM' => $this->request->getPost('txtNom'),
-            'PRENOM' => $this->request->getPost('txtPrenom'),
-            'ADRESSE' => $this->request->getPost('txtAdresse'),
-            'CODEPOSTAL' => $this->request->getPost('txtCodepostal'),
-            'VILLE' => $this->request->getPost('txtVille'),
-            'TELEPHONEFIXE' => $this->request->getPost('txtTelfixe'),
-            'TELEPHONEMOBILE' => $this->request->getPost('txtTelportable'),
-            'MEL' => $this->request->getPost('txtMel'),
-            'MOTDEPASSE' => $this->request->getPost('txtMotDePasse'),
+            'nom'=> $this->request->getPost('txtNom'),
+            'prenom' => $this->request->getPost('txtPrenom'),
+            'adresse'=> $this->request->getPost('txtAdresse'),
+            'codepostal'  => $this->request->getPost('txtCodepostal'),
+            'ville'  => $this->request->getPost('txtVille'),
+            'telephonefixe' => $this->request->getPost('txtTelfixe'),
+            'telephonemobile'=> $this->request->getPost('txtTelportable'),
+            'mel'=> $this->request->getPost('txtMel'),
+            'motdepasse'=> $this->request->getPost('txtMotDePasse'),
         ); 
         $modClient = new ModeleClients();
-        $condition = ['NOCLIENT'=>$session->get('noclient')];
-        $donnees['clientAModifier'] = $modClient->where('NOCLIENT', $condition)->update($condition,$donneesAModifier, false);
-
+       $data["modif"] = $modClient->update($session->get('noclient'), $donneesAModifier);
         return view('Templates/Header')
-            .view('utilisateur/vue_RapportAjout', $donnees)
+            .view('clients/vue_RapportModif', $data)
             .view('Templates/Footer');
         }
 
