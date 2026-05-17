@@ -44,6 +44,11 @@
                     Voir les horaires des traversées
                 </a>
             </a>
+             <?php if(!is_null($session->get('mel'))) : ?> 
+                <a class="btn btn-outline-light btn-sm me-2" href="<?php echo site_url('voirresa') ?>">
+                    Voir mes réservations
+                </a>
+            <?php endif; ?>
         </div>
     </div>
     </nav>

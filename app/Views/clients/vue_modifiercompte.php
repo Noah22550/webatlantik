@@ -3,42 +3,58 @@
     <div class="row justify-content-center">
         <div class="col-md-6">
             <div class="card shadow p-4">
-               <h2><?php echo $TitreDeLaPage ?></h2>
                 <?php
                 if ($TitreDeLaPage=='Saisie incorrecte')
-                    echo service('validation')->listErrors();
-                    /* set_value : en cas de non validation, les données déjà saisies sont réinjectées dans le formulaire */
+                    echo '<div class="alert alert-danger">'.service('validation')->listErrors().'</div>';
                     echo form_open('modifiercompte');
                     echo csrf_field();
                     
-                    echo form_label('Nom : ','txtNom');
-                    echo form_input('txtNom', set_value('txtNom')), '</br>', '</br>';
+                    echo '<div class="mb-3">';
+                    echo form_label('Nom : ','txtNom', ['class' => 'form-label']);
+                    echo form_input(['name' => 'txtNom', 'value' => set_value('txtNom'), 'class' => 'form-control']);
+                    echo '</div>';
 
-                    echo form_label('Prenom : ','txtPrenom');
-                    echo form_input('txtPrenom', set_value('txtPrenom')), '</br>', '</br>';
+                    echo '<div class="mb-3">';
+                    echo form_label('Prenom : ','txtPrenom', ['class' => 'form-label']);
+                    echo form_input(['name' => 'txtPrenom', 'value' => set_value('txtPrenom'), 'class' => 'form-control']);
+                    echo '</div>';
 
-                    echo form_label('Adresse : ','txtAdresse');
-                    echo form_input('txtAdresse', set_value('txtAdresse')), '</br>', '</br>';
+                    echo '<div class="mb-3">';
+                    echo form_label('Adresse : ','txtAdresse', ['class' => 'form-label']);
+                    echo form_input(['name' => 'txtAdresse', 'value' => set_value('txtAdresse'), 'class' => 'form-control']);
+                    echo '</div>';
 
-                    echo form_label('Code Postal : ','txtCodepostal');
-                    echo form_input('txtCodepostal', set_value('txtCodepostal')), '</br>', '</br>';
+                    echo '<div class="mb-3">';
+                    echo form_label('Code Postal : ','txtCodepostal', ['class' => 'form-label']);
+                    echo form_input(['name' => 'txtCodepostal', 'value' => set_value('txtCodepostal'), 'class' => 'form-control']);
+                    echo '</div>';
 
-                    echo form_label('Ville : ','txtVille');
-                    echo form_input('txtVille', set_value('txtVille')), '</br>', '</br>';
+                    echo '<div class="mb-3">';
+                    echo form_label('Ville : ','txtVille', ['class' => 'form-label']);
+                    echo form_input(['name' => 'txtVille', 'value' => set_value('txtVille'), 'class' => 'form-control']);
+                    echo '</div>';
 
-                    echo form_label('Telephone fixe : ','txtTelfixe');
-                    echo form_input('txtTelfixe', set_value('txtTelfixe')), '</br>', '</br>';
+                    echo '<div class="mb-3">';
+                    echo form_label('Telephone fixe : ','txtTelfixe', ['class' => 'form-label']);
+                    echo form_input(['name' => 'txtTelfixe', 'value' => set_value('txtTelfixe'), 'class' => 'form-control']);
+                    echo '</div>';
 
-                    echo form_label('Telephone portable : ','txtTelportable');
-                    echo form_input('txtTelportable', set_value('txtTelportable')), '</br>', '</br>';
+                    echo '<div class="mb-3">';
+                    echo form_label('Telephone portable : ','txtTelportable', ['class' => 'form-label']);
+                    echo form_input(['name' => 'txtTelportable', 'value' => set_value('txtTelportable'), 'class' => 'form-control']);
+                    echo '</div>';
 
-                    echo form_label('Adresse mel : ','txtMel');
-                    echo form_input('txtMel', set_value('txtMel')), '</br>', '</br>';
-                    
-                    echo form_label('Mot de passe : ','txtMotDePasse');
-                    echo form_input('txtMotDePasse', set_value('txtMotDePasse')), '</br>', '</br>';    
-                    
-                    echo form_submit('submit', 'Modifier les informations du compte');
+                    echo '<div class="mb-3">';
+                    echo form_label('Adresse mel : ','txtMel', ['class' => 'form-label']);
+                    echo form_input(['name' => 'txtMel', 'value' => set_value('txtMel'), 'class' => 'form-control']);
+                    echo '</div>';
+
+                    echo '<div class="mb-3">';
+                    echo form_label('Mot de passe : ','txtMotDePasse', ['class' => 'form-label']);
+                    echo form_input(['name' => 'txtMotDePasse', 'value' => set_value('txtMotDePasse'), 'class' => 'form-control']);
+                    echo '</div>';
+
+                    echo form_submit('submit', 'Modifier les informations du compte', ['class' => 'btn btn-primary w-100']);
                     echo form_close();
                 ?>
             </div>
