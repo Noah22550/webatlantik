@@ -21,3 +21,4 @@ $routes->get('traversetab/(:num)', 'clients::traversetab/$1');
 $routes->match(['get', 'post'],'traversetab/(:num)/(:num)', 'clients::traversetab/$1/$2');
 $routes->post('traversetab/(:alphanum)', 'clients::traversetab/$1');
 $routes->match(['get', 'post'], 'reserve/(:num)', 'clients::reserve/$1', ['filter' => 'client']);
+$routes->get('voirresa', 'clients::voirresa', ['filter' => 'client']);
