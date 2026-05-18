@@ -72,50 +72,50 @@
                 . view('Templates/Footer');
         }
 
-        public function traversetab($nosecteur)
-        {
-            $data['TitreDeLaPage'] = 'Horaires des traversées';
-            $modSec = new ModeleHoraire();
-            $modcate = new modelecategorie();
-            $data['nomsecteur'] = $modSec->findall();
-            $data['lescatégories'] = $modcate->findall();
-            $modLiaisons = new ModeleLiaisons();
-            $modperiode = new ModeleLiaisons();
-            $data['uneliaison']  = $modLiaisons->getport($nosecteur);
-            $data['lesperiodes'] = $modperiode->getperiode();
-            $data['traversees']  = $modSec->getLesTraverseesBateaux();
-            $data['resultat'] = [];
-            foreach ($data['lescatégories'] as $categorie) {
+            public function traversetab($nosecteur)
+            {
+                $data['TitreDeLaPage'] = 'Horaires des traversées';
+                $modSec      = new ModeleHoraire();
+                $modcate     = new ModeleCategorie();
+                $modLiaisons = new ModeleLiaisons();
+                $data['nomsecteur']    = $modSec->findAll();
+                $data['lescatégories'] = $modcate->findAll();
+                $data['uneliaison']    = $modLiaisons->getport($nosecteur);
+                $data['lesperiodes']   = $modLiaisons->getperiode();
+                $data['traversees']    = $modSec->getLesTraverseesBateaux();
+                $capamaxResult     = $modSec->getCapaciteMaximale();
+                $enregistreeResult = $modSec->getQuantiteEnregistree();
+                $resultat = [];
                 foreach ($data['traversees'] as $uneTraversee) {
-                    $capamaxResult = $modSec->getCapaciteMaximale();
-                    $enregistreeResult = $modSec->getQuantiteEnregistree();
-                    // Chercher la bonne ligne dans les résultats
-                    $capamax = 0;
-                    foreach ($capamaxResult as $res) {
-                        if ($res->LETTRECATEGORIE == $categorie->LETTRECATEGORIE && $res->NOBATEAU == $uneTraversee->NOBATEAU) {
-                            $capamax = (int)$res->CAPACITEMAX;
-                            break;
+                    foreach ($data['lescatégories'] as $categorie) {
+                        $lettre = $categorie->LETTRECATEGORIE;
+                        $capaMax = 0;
+                        foreach ($capamaxResult as $res) {
+                            if ($res->LETTRECATEGORIE == $lettre
+                                && $res->NOBATEAU == $uneTraversee->NOBATEAU) {
+                                $capaMax = (int)$res->CAPACITEMAX;
+                            }
                         }
-                    }
                         $enregistree = 0;
-                        foreach ($enregistreeResult as $res2) {
-                            if ($res2->LETTRECATEGORIE == $categorie->LETTRECATEGORIE && $res2->NOTRAVERSEE == $uneTraversee->Numero) {
-                                $enregistree = (int)$res2->quantite;
+                        foreach ($enregistreeResult as $res) {
+                            if ($res->LETTRECATEGORIE == $lettre
+                                && $res->NOTRAVERSEE == $uneTraversee->Numero) {
+                                $enregistree = (int)$res->quantite;
                                 break;
                             }
                         }
-                        $data['resultat'][] = (object)[
-                            'LETTRECATEGORIE' => $categorie->LETTRECATEGORIE,
-                            'NOTRAVERSEE'=> $uneTraversee->Numero,
-                            'NOLIAISON'=> $uneTraversee->NOLIAISON,
-                            'quantite' => $capamax - $enregistree,
+                        $resultat[] = (object)[
+                            'NOTRAVERSEE'      => $uneTraversee->Numero,
+                            'LETTRECATEGORIE'  => $lettre,
+                            'quantite'         => $capaMax - $enregistree,
                         ];
                     }
                 }
-            return view('Templates/Header')
-                . view('clients/vue_traversetab', $data)
-                . view('Templates/Footer');
-        }
+                $data['resultat'] = $resultat;
+                return view('Templates/Header')
+                    . view('clients/vue_traversetab', $data)
+                    . view('Templates/Footer');
+            }
         public function reserve($notraversee)
         {
                 $session = session();
