@@ -2,6 +2,8 @@
 namespace App\Controllers;
 helper(['assets', 'form']);
 use App\Models\ModeleClients;
+use App\Models\ModeleLiaisons;
+use App\Models\ModeleTarif;
 class visiteur extends BaseController
 {
     public function acceuil()
@@ -113,4 +115,30 @@ class visiteur extends BaseController
         session()->destroy();
         return redirect()->to('seconnecter');
     } // Fin seDeconnecte
+    public function liaisonssecteur()
+        {
+            $modLiaisons = new modeleLiaisons();
+
+            $data['LesLiaisons'] = $modLiaisons->getliaisonsecteur();
+            $data['TitreDeLaPage'] = 'Toutes les liaisons';
+
+            return view('Templates/Header', $data)
+                . view('utilisateur/vue_liaisonssecteur', $data)
+                . view('Templates/Footer');
+        }
+        public function liaisontarif($noliaison)
+        {
+        $modeletarif = new modeleTarif();
+
+            $data['noliaison'] = $noliaison;
+            $data['categories']= $modeletarif->getcategorie();
+            $data['types'] = $modeletarif->getype();
+            $data['periodes'] = $modeletarif->getperiode();
+            $data['tarifs'] = $modeletarif->getAllTarifs($noliaison);
+            $data['nomsports'] = $modeletarif->getnomport($noliaison);
+            $data['TitreDeLaPage'] = 'Tarifs de la liaison ' . $noliaison;
+            return view('Templates/Header', $data)
+                . view('utilisateur/vue_liaisontarif', $data)
+                . view('Templates/Footer');
+        } 
 }

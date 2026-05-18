@@ -14,7 +14,7 @@ $table->setHeading([
 
 foreach ($LesLiaisons as $uneLiaison) {
     $table->addRow([
-        $uneLiaison->nomsecteur,
+       array_unique([$uneLiaison->nomsecteur])[0],
         $uneLiaison->portdepart,
         $uneLiaison->portarrivee,
         anchor('liaisontarif/' . $uneLiaison->NOLIAISON, $uneLiaison->NOLIAISON),

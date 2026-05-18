@@ -11,32 +11,7 @@
 
     class clients extends BaseController
     {
-        public function liaisonssecteur()
-        {
-            $modLiaisons = new modeleLiaisons();
-
-            $data['LesLiaisons'] = $modLiaisons->getliaisonsecteur();
-            $data['TitreDeLaPage'] = 'Toutes les liaisons';
-
-            return view('Templates/Header', $data)
-                . view('clients/vue_liaisonssecteur', $data)
-                . view('Templates/Footer');
-        }
-        public function liaisontarif($noliaison)
-        {
-        $modeletarif = new modeleTarif();
-
-            $data['noliaison'] = $noliaison;
-            $data['categories']= $modeletarif->getcategorie();
-            $data['types'] = $modeletarif->getype();
-            $data['periodes'] = $modeletarif->getperiode();
-            $data['tarifs'] = $modeletarif->getAllTarifs($noliaison);
-            $data['nomsports'] = $modeletarif->getnomport($noliaison);
-            $data['TitreDeLaPage'] = 'Tarifs de la liaison ' . $noliaison;
-            return view('Templates/Header', $data)
-                . view('clients/vue_liaisontarif', $data)
-                . view('Templates/Footer');
-        } 
+        
 
 
 
@@ -144,6 +119,7 @@
         public function reserve($notraversee)
         {
                 $session = session();
+                date_default_timezone_set('Europe/Paris');
                 $modeTarif = new ModeleTarif();
                 $modeclient = new ModeleClients();
                 $modeliaisons = new ModeleLiaisons();
@@ -156,7 +132,7 @@
                 $session->set('notraversee', $notraversee);
                 $data['entete'] = $modeliaisons->getenteteprtarif($notraversee);
                 $data['libelle'] = $modeTarif->getTarif($noliaison, $datedepart);
-                if ($this->request->is('post')) {
+                if (isset($_POST['bouton'])) {
                     $total = 0;
                     foreach ($this->request->getPost('libelle') as $ligne) {
                         if ($ligne['qte'] != "") {
