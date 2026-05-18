@@ -86,6 +86,7 @@
                 $data['entete'] = $modeliaisons->getenteteprtarif($notraversee);
                 $data['libelle'] = $modeTarif->getTarif($noliaison, $datedepart);
                 if (isset($_POST['bouton'])) {
+                    
                     $total = 0;
                     foreach ($this->request->getPost('libelle') as $ligne) {
                         if ($ligne['qte'] != "") {
