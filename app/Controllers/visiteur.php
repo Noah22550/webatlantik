@@ -154,25 +154,24 @@ class visiteur extends BaseController
                 $data['uneliaison'] = $modLiaisons->getport($nosecteur);
                 $data['lesperiodes'] = $modLiaisons->getperiode();
                 $data['traversees'] = $modSec->getLesTraverseesBateaux();
-                $capamaxResult = $modSec->getCapaciteMaximale();
-                $enregistreeResult = $modSec->getQuantiteEnregistree();
+                $capamaxResultat = $modSec->getCapaciteMaximale();
+                $enregistreeResultat = $modSec->getQuantiteEnregistree();
                 $resultat = [];
                 foreach ($data['traversees'] as $uneTraversee) {
                     foreach ($data['lescatégories'] as $categorie) {
                         $lettre = $categorie->LETTRECATEGORIE;
                         $capaMax = 0;
-                        foreach ($capamaxResult as $res) {
+                        foreach ($capamaxResultat as $res) {
                             if ($res->LETTRECATEGORIE == $lettre
                                 && $res->NOBATEAU == $uneTraversee->NOBATEAU) {
                                 $capaMax = (int)$res->CAPACITEMAX;
                             }
                         }
                         $enregistree = 0;
-                        foreach ($enregistreeResult as $res) {
-                            if ($res->LETTRECATEGORIE == $lettre
-                                && $res->NOTRAVERSEE == $uneTraversee->Numero) {
-                                $enregistree = (int)$res->quantite;
-                                break;
+                        foreach ($enregistreeResultat as $res2) {
+                            if ($res2->LETTRECATEGORIE == $lettre
+                                && $res2->NOTRAVERSEE == $uneTraversee->Numero) {
+                                $enregistree = (int)$res2->quantite;
                             }
                         }
                         $resultat[] = (object)[
