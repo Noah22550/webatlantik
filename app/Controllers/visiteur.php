@@ -4,6 +4,8 @@ helper(['assets', 'form']);
 use App\Models\ModeleClients;
 use App\Models\ModeleLiaisons;
 use App\Models\ModeleTarif;
+use App\Models\ModeleHoraire;
+use App\Models\modelecategorie;
 class visiteur extends BaseController
 {
     public function acceuil()
@@ -141,4 +143,48 @@ class visiteur extends BaseController
                 . view('utilisateur/vue_liaisontarif', $data)
                 . view('Templates/Footer');
         } 
+         public function traversetab($nosecteur)
+            {
+                $data['TitreDeLaPage'] = 'Horaires des traversées';
+                $modSec = new ModeleHoraire();
+                $modcate  = new ModeleCategorie();
+                $modLiaisons = new ModeleLiaisons();
+                $data['nomsecteur'] = $modSec->findAll();
+                $data['lescatégories'] = $modcate->findAll();
+                $data['uneliaison'] = $modLiaisons->getport($nosecteur);
+                $data['lesperiodes'] = $modLiaisons->getperiode();
+                $data['traversees'] = $modSec->getLesTraverseesBateaux();
+                $capamaxResult = $modSec->getCapaciteMaximale();
+                $enregistreeResult = $modSec->getQuantiteEnregistree();
+                $resultat = [];
+                foreach ($data['traversees'] as $uneTraversee) {
+                    foreach ($data['lescatégories'] as $categorie) {
+                        $lettre = $categorie->LETTRECATEGORIE;
+                        $capaMax = 0;
+                        foreach ($capamaxResult as $res) {
+                            if ($res->LETTRECATEGORIE == $lettre
+                                && $res->NOBATEAU == $uneTraversee->NOBATEAU) {
+                                $capaMax = (int)$res->CAPACITEMAX;
+                            }
+                        }
+                        $enregistree = 0;
+                        foreach ($enregistreeResult as $res) {
+                            if ($res->LETTRECATEGORIE == $lettre
+                                && $res->NOTRAVERSEE == $uneTraversee->Numero) {
+                                $enregistree = (int)$res->quantite;
+                                break;
+                            }
+                        }
+                        $resultat[] = (object)[
+                            'NOTRAVERSEE' => $uneTraversee->Numero,
+                            'LETTRECATEGORIE' => $lettre,
+                            'quantite'=> $capaMax - $enregistree,
+                        ];
+                    }
+                }
+                $data['resultat'] = $resultat;
+                return view('Templates/Header')
+                    . view('utilisateur/vue_traversetab', $data)
+                    . view('Templates/Footer');
+            }
 }
