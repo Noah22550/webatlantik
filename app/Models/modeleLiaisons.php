@@ -50,7 +50,8 @@
                           portd.NOM AS portdépart, 
                           porta.NOM AS portarrivé, 
                           t.NOTRAVERSEE AS notraversee, 
-                          ty.LETTRECATEGORIE AS lettre, DATE(t.DATEHEUREDEPART) as dates,TIME(t.DATEHEUREDEPART) as heures")
+                          ty.LETTRECATEGORIE AS lettre, DATE(t.DATEHEUREDEPART) as dates,
+                          TIME(t.DATEHEUREDEPART) as heures")
                 ->from('liaison l')
                 ->join('port porta', 'porta.NOPORT = l.NOPORT_ARRIVEE')
                 ->join('port portd', 'portd.NOPORT = l.NOPORT_DEPART')

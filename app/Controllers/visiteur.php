@@ -157,30 +157,33 @@ class visiteur extends BaseController
                 $capamaxResultat = $modSec->getCapaciteMaximale();
                 $enregistreeResultat = $modSec->getQuantiteEnregistree();
                 $resultat = [];
-                foreach ($data['traversees'] as $uneTraversee) {
-                    foreach ($data['lescatégories'] as $categorie) {
-                        $lettre = $categorie->LETTRECATEGORIE;
-                        $capaMax = 0;
-                        foreach ($capamaxResultat as $res) {
-                            if ($res->LETTRECATEGORIE == $lettre
-                                && $res->NOBATEAU == $uneTraversee->NOBATEAU) {
-                                $capaMax = (int)$res->CAPACITEMAX;
+                foreach($data['lesperiodes'] as $unePeriode){
+                    foreach ($data['traversees'] as $uneTraversee) {
+                        foreach ($data['lescatégories'] as $categorie) {
+                            $lettre = $categorie->LETTRECATEGORIE;
+                            $capaMax = 0;
+                            foreach ($capamaxResultat as $res) {
+                                if ($res->LETTRECATEGORIE == $lettre
+                                    && $res->NOBATEAU == $uneTraversee->NOBATEAU) {
+                                    $capaMax = (int)$res->CAPACITEMAX;
+                                }
                             }
-                        }
-                        $enregistree = 0;
-                        foreach ($enregistreeResultat as $res2) {
-                            if ($res2->LETTRECATEGORIE == $lettre
-                                && $res2->NOTRAVERSEE == $uneTraversee->Numero) {
-                                $enregistree = (int)$res2->quantite;
+                            $enregistree = 0;
+                            foreach ($enregistreeResultat as $res2) {
+                                if ($res2->LETTRECATEGORIE == $lettre
+                                    && $res2->NOTRAVERSEE == $uneTraversee->Numero) {
+                                    $enregistree = (int)$res2->quantite;
+                                }
                             }
+                            $resultat[] = (object)[
+                                'NOTRAVERSEE' => $uneTraversee->Numero,
+                                'LETTRECATEGORIE' => $lettre,
+                                'quantite'=> $capaMax - $enregistree,
+                            ];
                         }
-                        $resultat[] = (object)[
-                            'NOTRAVERSEE' => $uneTraversee->Numero,
-                            'LETTRECATEGORIE' => $lettre,
-                            'quantite'=> $capaMax - $enregistree,
-                        ];
                     }
                 }
+                
                 $data['resultat'] = $resultat;
                 return view('Templates/Header')
                     . view('utilisateur/vue_traversetab', $data)

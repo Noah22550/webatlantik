@@ -19,7 +19,8 @@
                 ->join('port pa', 'pa.NOPORT = l.NOPORT_ARRIVEE', 'inner')
                 ->where('r.NOCLIENT', $noclient)
                 ->orderBy('r.DATEHEURE', 'DESC')
-                ->paginate(3);
+                ->get()
+                ->getResult();
         }
     }
 ?>

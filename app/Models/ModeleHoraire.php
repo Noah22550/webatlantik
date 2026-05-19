@@ -16,8 +16,6 @@
                 ->from('reservation r')
                 ->join('enregistrer e', 'r.NORESERVATION = e.NORESERVATION')
                 ->join('type ty', 'ty.NOTYPE = ty.NOTYPE', 'inner')
-                //->where('r.NOTRAVERSEE', $noTraversee)
-                //->where(' e.LETTRECATEGORIE', $lettreCategorie)
                 ->get()
                 ->getResult();
             }
@@ -36,9 +34,11 @@
         
         public function getLesTraverseesBateaux()
         {
-            return $this->select('NOLIAISON, t.NOTRAVERSEE as Numero, TIME(DATEHEUREDEPART) As heure, b.NOM, b.NOBATEAU, date(t.DATEHEUREDEPART) as dateDepart')
+            return $this->select('NOLIAISON, t.NOTRAVERSEE as Numero, TIME(DATEHEUREDEPART) As heure, b.NOM, b.NOBATEAU,
+              date(t.DATEHEUREDEPART) as dateDepart')
                 ->from('traversee t')
                 ->join('bateau b', 'b.NOBATEAU = t.NOBATEAU', 'inner')
+
                 ->groupby('t.NOTRAVERSEE')
                 ->get()
                 ->getResult();

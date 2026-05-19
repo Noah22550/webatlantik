@@ -11,10 +11,7 @@
 
     class clients extends BaseController
     {
-        
-
-
-
+    
         public function modifcompte()
         {
         $session = session();
@@ -86,7 +83,6 @@
                 $data['entete'] = $modeliaisons->getenteteprtarif($notraversee);
                 $data['libelle'] = $modeTarif->getTarif($noliaison, $datedepart);
                 if (isset($_POST['bouton'])) {
-                    
                     $total = 0;
                     foreach ($this->request->getPost('libelle') as $ligne) {
                         if ($ligne['qte'] != "") {
@@ -136,10 +132,13 @@
         }
         public function voirresa()
         {
+            $pager = \Config\Services::pager();
             $session = session();
             $modeleReserv = new modeleReserv();
             $data['TitreDeLaPage'] = 'Mes réservations';
+            $data['Pager'] = $modeleReserv->Pager;
             $data['reservations'] = $modeleReserv->getreservation($session->get('noclient'));
+            $data['reservations'] = $modeleReserv->paginate(3);
             $data['pager'] = $modeleReserv->pager;
             return view('Templates/Header', $data)
                 . view('clients/vue_voirresa', $data)

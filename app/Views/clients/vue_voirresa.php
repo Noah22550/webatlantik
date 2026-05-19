@@ -30,7 +30,8 @@
                 echo "</tr>";
             }
             
-            ?>
-        </tbody>
-    </table>
-<?= $pager->links() ?>
+            
+        echo "</tbody>";
+   echo" </table>";
+ echo $Pager->links();
+ ?>
