@@ -16,6 +16,7 @@
         {
         $session = session();
         $data['TitreDeLaPage'] = 'Modifer vos informations';
+        $data['client'] = (new ModeleClients())->find($session->get('noclient'));
         if (!$this->request->is('post')) {
             return view('Templates/Header')
             . view('Clients/vue_modifiercompte', $data)
