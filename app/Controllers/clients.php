@@ -118,27 +118,27 @@
                         }
                     }
                   $message = '
-            <html>
-            <body>
-                <h2>Confirmation de réservation</h2>
-                <p>Bonjour </p>
-                <p>Votre réservation a bien été enregistrée. Voici le récapitulatif :</p>
-                <table border="1" cellpadding="8">
-                    <tr>
-                        <td><strong>Date de réservation</strong></td>
-                        <td>' . date('d/m/Y H:i') . '</td>
-                    </tr>
-                        <td><strong>Montant total</strong></td>
-                        <td>' . number_format($total, 2) . ' €</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Statut paiement</strong></td>
-                        <td>En attente</td>
-                    </tr>
-                </table>
-                <p>Merci de votre confiance.</p>
-            </body>
-            </html>';
+                    <html>
+                    <body>
+                        <h2>Confirmation de réservation</h2>
+                        <p>Bonjour </p>
+                        <p>Votre réservation a bien été enregistrée. Voici le récapitulatif :</p>
+                        <table border="1" cellpadding="8">
+                            <tr>
+                                <td><strong>Date de réservation</strong></td>
+                                <td>' . date('d/m/Y H:i') . '</td>
+                            </tr>
+                                <td><strong>Montant total</strong></td>
+                                <td>' . number_format($total, 2) . ' €</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Statut paiement</strong></td>
+                                <td>En attente</td>
+                            </tr>
+                        </table>
+                        <p>Merci de votre confiance.</p>
+                    </body>
+                    </html>';
                     $email = service('email');
                     $email->setFrom('your@example.com', 'Your Name');
                     $email->setTo(($session->get('mel')));

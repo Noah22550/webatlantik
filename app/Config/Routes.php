@@ -26,3 +26,4 @@ $routes->get ('paiement/accepte', 'Paiement::accepte');
 $routes->get ('paiement/annule',  'Paiement::annule');
 $routes->get ('paiement/refuse',  'Paiement::refuse');
 $routes->get ('paiement/retour',  'Paiement::retour');
+$routes->get('pdf/reservation/(:num)', 'PdfController::generateReservationPdf/$1');

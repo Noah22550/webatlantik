@@ -9,6 +9,7 @@
             <th>Port de Départ</th>
             <th>Port d'Arrivée</th>
             <th>Payé</th>
+            <th>PDF</th>
         </tr>
     </thead>
     <tbody>
@@ -29,9 +30,16 @@
                        
                      ?>
                 </td>
+                <td>
+                    <a href="<?php echo base_url('pdf/reservation/' . $reservation->NORESERVATION); ?>" 
+                    class="btn btn-sm btn-outline-primary" target="_blank">
+                        📄 PDF
+                    </a>
+                </td>
             </tr>
         <?php endforeach ?>
     </tbody>
 </table>
+
 
 <?= $pager->links() ?>  
