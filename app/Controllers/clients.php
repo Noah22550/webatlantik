@@ -103,7 +103,7 @@
                         'MODEREGLEMENT'=> null,
                     ];
                     $moderesa->insert($donneesAInserer, false);
-                    //$noreservation = $moderesa->getInsertID(); 
+                    $noreservation = $moderesa->getInsertID(); 
                     $session->set('noreservation', $noreservation);
                     foreach ($this->request->getPost('libelle') as $ligne) {
                         if ($ligne['qte'] != "") { 
