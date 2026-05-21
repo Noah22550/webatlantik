@@ -27,7 +27,6 @@
                          Payer maintenant
                     </button>
                 </form>
-
             </div>
         </div>
     </div>
