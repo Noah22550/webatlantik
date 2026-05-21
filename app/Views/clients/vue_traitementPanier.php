@@ -44,9 +44,9 @@
         ?>
     </div>
 </div>
- <button type="submit" class="btn btn-info mt-4" name="paiement" value="1">
-            payer
-        </button>
+<a href="<?php echo base_url('paiement'); ?>" class="btn btn-info mt-4">
+     Payer
+</a>
 
 </center>
 </body>

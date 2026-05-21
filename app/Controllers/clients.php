@@ -87,6 +87,7 @@
                 if (isset($_POST['bouton'])) {
                     $total = 0;
                     foreach ($this->request->getPost('libelle') as $ligne) {
+                        
                         if ($ligne['qte'] != "") {
                             $tarif = (float) $ligne['tarif'];
                             $qte   = (float) $ligne['qte'];
@@ -115,14 +116,15 @@
                             $modEnr->insert($donneesEnr, false);
                         }
                     }
-                    $session->set('noreservation', $noreservation);
                     $session->set('montanttotal', $total);
-                    $session->set('lignes', $this->request->getPost('libelle'));
                     $data['lignes']  = $modEnr->getLignesReservation($noreservation);
                     $data['noreservation'] = $noreservation;
                     $data['montanttotal'] = $total;
                     $data['client']  = $modeclient->find($session->get('noclient'));
                     $data['TitreDeLaPage'] = 'Votre réservation';
+                    if ($this->request->getPost('paiement') == '1') {
+                        return redirect()->to('paiement');
+                    }
 
                     return view('Templates/Header', $data)
                         . view('clients/vue_traitementPanier', $data)

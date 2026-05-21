@@ -21,3 +21,8 @@ $routes->match(['get', 'post'],'traversetab/(:num)/(:num)', 'visiteur::traverset
 $routes->post('traversetab/(:alphanum)', 'visiteur::traversetab/$1');
 $routes->match(['get', 'post'], 'reserve/(:num)', 'clients::reserve/$1', ['filter' => 'client']);
 $routes->get('voirresa', 'clients::voirresa', ['filter' => 'client']);
+$routes->get ('paiement',         'Paiement::index');
+$routes->get ('paiement/accepte', 'Paiement::accepte');
+$routes->get ('paiement/annule',  'Paiement::annule');
+$routes->get ('paiement/refuse',  'Paiement::refuse');
+$routes->get ('paiement/retour',  'Paiement::retour');
