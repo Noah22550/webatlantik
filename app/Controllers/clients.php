@@ -16,7 +16,8 @@
         {
         $session = session();
         $data['TitreDeLaPage'] = 'Modifer vos informations';
-        $data['client'] = (new ModeleClients())->find($session->get('noclient'));
+        $client  = (new ModeleClients())->find($session->get('noclient'));
+        $data['client'] = $client;
         if (!$this->request->is('post')) {
             return view('Templates/Header')
             . view('Clients/vue_modifiercompte', $data)
@@ -135,11 +136,9 @@
         {
         $session = session();
         $modeleReserv = new modeleReserv();
-
         $data['TitreDeLaPage'] = 'Mes réservations';
         $data['reservations']  = $modeleReserv->getreservation($session->get('noclient'));
-        $data['pager']         = $modeleReserv->pager; // ← minuscule, APRÈS getreservation()
-
+        $data['pager'] = $modeleReserv->pager;
         return view('Templates/Header', $data)
             . view('clients/vue_voirresa', $data)
             . view('Templates/Footer');

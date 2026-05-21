@@ -20,8 +20,14 @@
                 <td><?= $reservation->DATEHEUREDEPART ?></td>
                 <td><?= $reservation->portdepart ?></td>
                 <td><?= $reservation->portarrivee ?></td>
-                <td class="<?= $reservation->PAYE ? 'text-success' : 'text-danger' ?>">
-                    <?= $reservation->PAYE ? 'Oui' : 'Non' ?>
+                <td> <?php if ($reservation->PAYE) {
+                        echo '<span class="text-success">Oui</span>';
+                    }
+                    else {
+                         echo '<span class="text-danger">Non</span>';
+                    }
+                       
+                     ?>
                 </td>
             </tr>
         <?php endforeach ?>
