@@ -132,17 +132,16 @@
         }
         public function voirresa()
         {
-            $pager = \Config\Services::pager();
-            $session = session();
-            $modeleReserv = new modeleReserv();
-            $data['TitreDeLaPage'] = 'Mes réservations';
-            $data['Pager'] = $modeleReserv->Pager;
-            $data['reservations'] = $modeleReserv->getreservation($session->get('noclient'));
-            $data['reservations'] = $modeleReserv->paginate(3);
-            $data['pager'] = $modeleReserv->pager;
-            return view('Templates/Header', $data)
-                . view('clients/vue_voirresa', $data)
-                . view('Templates/Footer');
+        $session = session();
+        $modeleReserv = new modeleReserv();
+
+        $data['TitreDeLaPage'] = 'Mes réservations';
+        $data['reservations']  = $modeleReserv->getreservation($session->get('noclient'));
+        $data['pager']         = $modeleReserv->pager; // ← minuscule, APRÈS getreservation()
+
+        return view('Templates/Header', $data)
+            . view('clients/vue_voirresa', $data)
+            . view('Templates/Footer');
         }
         
     }
