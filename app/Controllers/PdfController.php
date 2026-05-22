@@ -11,15 +11,15 @@ class PdfController extends BaseController
 {
     public function generateReservationPdf($noreservation)
     {
-        $session      = session();
+        $session  = session();
         $modeleReserv = new modeleReserv();
         $modeleClient = new ModeleClients();
-        $modEnr       = new ModeleEnregistrer();
+        $modEnr  = new ModeleEnregistrer();
 
         // Récupération des données
-        $client      = $modeleClient->find($session->get('noclient'));
+        $client = $modeleClient->find($session->get('noclient'));
         $reservation = $modeleReserv->getreservationById($noreservation);
-        $lignes      = $modEnr->getLignesReservation2($noreservation);
+        $lignes = $modEnr->getLignesReservation2($noreservation);
 
         $options = new Options();
         $options->set('isRemoteEnabled', true);

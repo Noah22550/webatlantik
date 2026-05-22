@@ -3,7 +3,7 @@
         <div class="col-md-6">
             <div class="card shadow p-4 text-center border-danger">
 
-                <h2 class="text-danger mb-4">❌ Paiement refusé</h2>
+                <h2 class="text-danger mb-4"> Paiement refusé</h2>
 
                 <p>Votre paiement a été refusé par la banque.</p>
                 <p>Vérifiez vos informations bancaires et réessayez.</p>

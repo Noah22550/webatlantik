@@ -78,7 +78,7 @@
         </tr>
         <tr>
             <th>Montant total</th>
-            <td><?php echo number_format($reservation->MONTANTTOTAL, 2); ?> €</td>
+            <td><?php echo number_format($reservation->MONTANTTOTAL); ?> €</td>
         </tr>
         <tr>
             <th>Statut paiement</th>
@@ -98,7 +98,6 @@
         <thead>
             <tr>
                 <th>Catégorie</th>
-                <th>Type</th>
                 <th>Quantité réservée</th>
                 <th>Quantité embarquée</th>
             </tr>
