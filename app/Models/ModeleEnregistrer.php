@@ -16,4 +16,19 @@ class ModeleEnregistrer extends Model
         ->get()
         ->getResult();
     }
+
+     public function getLignesReservation2($noreservation)
+        {
+            return $this->db->table('enregistrer e')
+                ->select('e.LETTRECATEGORIE,
+                        e.NOTYPE,
+                        e.QUANTITERESERVEE,
+                        e.QUANTITEEMBARQUEE,
+                        t.LIBELLE as libelletarif')
+                ->join('type t', 't.LETTRECATEGORIE = e.LETTRECATEGORIE 
+                            AND t.NOTYPE = e.NOTYPE', 'inner')
+                ->where('e.NORESERVATION', $noreservation)
+                ->get()
+                ->getResult(); // ← retourne un tableau d'objets
+        }
 }

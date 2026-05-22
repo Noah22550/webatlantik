@@ -33,7 +33,7 @@
                 <td>
                     <a href="<?php echo base_url('pdf/reservation/' . $reservation->NORESERVATION); ?>" 
                     class="btn btn-sm btn-outline-primary" target="_blank">
-                        📄 PDF
+                         PDF
                     </a>
                 </td>
             </tr>

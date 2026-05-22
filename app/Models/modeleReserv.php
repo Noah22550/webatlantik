@@ -25,16 +25,21 @@ class modeleReserv extends Model
     }
     public function getreservationById($noreservation)
     {
-       return $this->db->table('enregistrer e')
-        ->select('e.LETTRECATEGORIE,
-                  e.NOTYPE,
-                  e.QUANTITERESERVEE,
-                  e.QUANTITEEMBARQUEE,
-                  t.LIBELLE as libelletarif')
-        ->join('type t', 't.LETTRECATEGORIE = e.LETTRECATEGORIE 
-                      AND t.NOTYPE = e.NOTYPE', 'inner') // ← type pas tarif
-        ->where('e.NORESERVATION', $noreservation)
+      return $this->db->table('reservation r')
+        ->select('r.NORESERVATION, 
+                  r.DATEHEURE, 
+                  r.MONTANTTOTAL, 
+                  r.PAYE,
+                  t.DATEHEUREDEPART,
+                  pd.NOM as portdepart,
+                  pa.NOM as portarrivee')
+        ->join('traversee t', 't.NOTRAVERSEE = r.NOTRAVERSEE', 'inner')
+        ->join('liaison l', 'l.NOLIAISON = t.NOLIAISON', 'inner')
+        ->join('port pd', 'pd.NOPORT = l.NOPORT_DEPART', 'inner')
+        ->join('port pa', 'pa.NOPORT = l.NOPORT_ARRIVEE', 'inner')
+        ->where('r.NORESERVATION', $noreservation)
         ->get()
-        ->getResult();
+        ->getRowObject();
     }
+   
 }

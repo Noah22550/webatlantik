@@ -19,16 +19,16 @@ class PdfController extends BaseController
         // Récupération des données
         $client      = $modeleClient->find($session->get('noclient'));
         $reservation = $modeleReserv->getreservationById($noreservation);
-        $lignes      = $modEnr->getLignesReservation($noreservation);
+        $lignes      = $modEnr->getLignesReservation2($noreservation);
+
         $options = new Options();
         $options->set('isRemoteEnabled', true);
-
         $dompdf = new Dompdf($options);
 
         $html = view('clients/pdf_reservation', [
-            'client'      => $client,
+            'client' => $client,
             'reservation' => $reservation,
-            'lignes'      => $lignes,
+            'lignes'=> $lignes,
         ]);
         $dompdf->loadHtml($html);
         $dompdf->setPaper('A4', 'portrait');
